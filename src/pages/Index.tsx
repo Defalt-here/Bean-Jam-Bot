@@ -1,0 +1,257 @@
+import { useState, useRef, useEffect } from 'react';
+import { BlobAnimation } from '@/components/BlobAnimation';
+import { ChatMessage } from '@/components/ChatMessage';
+import { WeatherCard, type WeatherCardProps } from '@/components/WeatherCard';
+import { LanguageToggle } from '@/components/LanguageToggle';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import useAudioLevel from '@/hooks/use-audio-level';
+import { getGeminiService } from '@/lib/gemini';
+import { useToast } from '@/hooks/use-toast';
+import { getUserLocation, formatLocation, type LocationData } from '@/lib/location';
+import { getWeather, formatWeatherSummary, parseDateFromMessage, extractWeatherCardData } from '@/lib/weather';
+
+interface Message {
+  content: string;
+  isUser: boolean;
+  weatherData?: WeatherCardProps;
+}
+
+const Index = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const levels = useAudioLevel(isRecording);
+  const [language, setLanguage] = useState<'en' | 'jp'>('en');
+  const [hasStartedChat, setHasStartedChat] = useState(false);
+  const [userLocation, setUserLocation] = useState<LocationData | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+  const locationFetchedRef = useRef(false);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Fetch user location on mount (silently in background)
+  useEffect(() => {
+    if (locationFetchedRef.current) return;
+    locationFetchedRef.current = true;
+
+    const fetchLocation = async () => {
+      try {
+        const location = await getUserLocation();
+        setUserLocation(location);
+        console.log('Location detected:', formatLocation(location));
+      } catch (error) {
+        console.error('Location detection error:', error);
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+  const translations = {
+    en: {
+      placeholder: 'Type your message...',
+      send: 'SEND',
+    },
+    jp: {
+      placeholder: 'メッセージを入力...',
+      send: '送信',
+    },
+  };
+
+  const simulateResponse = async (userMessage: string) => {
+    setIsLoading(true);
+    setIsCreating(true); // Show create animation while Gemini is thinking
+    try {
+      const locationContext = userLocation ? formatLocation(userLocation) : undefined;
+      let weatherContext: string | undefined;
+      let weatherCardData: WeatherCardProps | undefined;
+
+      // Always fetch weather data if location is available
+      // Gemini will decide whether to show the weather card based on the user's question
+      if (userLocation && (userLocation.latitude || userLocation.city)) {
+        try {
+          const days = parseDateFromMessage(userMessage, language);
+          const forecastDays = days > 0 ? days + 1 : 1; // Include current day + future days
+          const weatherData = await getWeather(userLocation, forecastDays);
+          weatherContext = formatWeatherSummary(weatherData, language);
+          // Prepare weather card data in case Gemini decides to show it
+          weatherCardData = extractWeatherCardData(weatherData, days);
+        } catch (weatherError) {
+          console.error('Weather fetch error:', weatherError);
+          // Continue without weather data - Gemini will respond without it
+        }
+      }
+
+      const gemini = getGeminiService();
+      const result = await gemini.generateResponse(
+        userMessage, 
+        language, 
+        messages, 
+        locationContext,
+        weatherContext
+      );
+      
+      // Only include weather card data if Gemini indicated it should be shown
+      setMessages(prev => [...prev, { 
+        content: result.response, 
+        isUser: false,
+        weatherData: result.showWeatherCard ? weatherCardData : undefined
+      }]);
+    } catch (error) {
+      console.error('Error getting response:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get response';
+      
+      // Show error toast
+      toast({
+        title: language === 'en' ? 'Error' : 'エラー',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+
+      // Fallback message
+      const fallbackMsg = language === 'en' 
+        ? 'Sorry, I encountered an error. Please check your API key configuration and try again.'
+        : '申し訳ありません。エラーが発生しました。APIキーの設定を確認して、もう一度お試しください。';
+      
+      setMessages(prev => [...prev, { content: fallbackMsg, isUser: false }]);
+    } finally {
+      setIsLoading(false);
+      setIsCreating(false); // Stop create animation when response is complete
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    if (!hasStartedChat) {
+      setHasStartedChat(true);
+    }
+
+    const newMessage = { content: input, isUser: true };
+    setMessages(prev => [...prev, newMessage]);
+    setInput('');
+    simulateResponse(input);
+  };
+
+  return (
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      <BlobAnimation isLoading={isLoading || isCreating || isRecording} isBehind={hasStartedChat} mode={isCreating ? 'create' : 'normal'} levels={levels} />
+      
+      <div className="fixed top-0 left-0 right-0 flex justify-center pt-6 z-20">
+        <LanguageToggle 
+          language={language} 
+          onToggle={() => setLanguage(lang => lang === 'en' ? 'jp' : 'en')} 
+        />
+      </div>
+
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-8">
+        {!hasStartedChat ? (
+          <div className="text-center space-y-8">
+            <h1 className="font-mono text-6xl font-bold text-foreground tracking-tight">
+              {language === 'en' ? 'BEAN JAM BOT' : 'ビーンジャムボット'}
+            </h1>
+            <p className="font-mono text-lg text-muted-foreground">
+              {language === 'en' ? 'Start a conversation' : '会話を始める'}
+            </p>
+          </div>
+        ) : (
+          <div 
+            className="w-full max-w-4xl h-[70vh] backdrop-blur-xl bg-glass border-2 border-foreground flex flex-col chat-card-shadow"
+          >
+            <div className="flex-1 overflow-y-auto p-6 brutalist-scrollbar">
+              {messages.map((message, index) => (
+                <div key={index}>
+                  {message.weatherData && !message.isUser && (
+                    <div className="flex justify-start mb-4">
+                      <WeatherCard {...message.weatherData} />
+                    </div>
+                  )}
+                  <ChatMessage
+                    content={message.content}
+                    isUser={message.isUser}
+                    language={language}
+                  />
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start mb-4">
+                  <div className="px-4 py-3 border-2 border-foreground bg-background font-mono text-sm">
+                    <span className="inline-block animate-pulse">...</span>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <form onSubmit={handleSubmit} className="border-t-2 border-foreground p-4 flex gap-2">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={translations[language].placeholder}
+                className="flex-1 border-2 border-foreground font-mono focus-visible:ring-0 focus-visible:ring-offset-0 bg-background"
+                disabled={isLoading}
+              />
+              <button
+                type="button"
+                onClick={() => setIsRecording(r => !r)}
+                className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${isRecording ? 'text-red-500' : ''}`}
+                aria-pressed={isRecording ? "true" : "false"}
+                title={isRecording ? 'Stop recording' : 'Start voice input'}
+              >
+                {isRecording ? 'Stop' : 'Mic'}
+              </button>
+
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="border-2 border-foreground bg-foreground text-background hover:bg-background hover:text-foreground font-mono font-bold transition-colors"
+              >
+                {translations[language].send}
+              </Button>
+            </form>
+          </div>
+        )}
+
+        {!hasStartedChat && (
+          <form onSubmit={handleSubmit} className="w-full max-w-2xl mt-12 flex gap-2">
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={translations[language].placeholder}
+              className="flex-1 border-2 border-foreground font-mono focus-visible:ring-0 focus-visible:ring-offset-0 bg-background text-lg py-6"
+            />
+            <button
+              type="button"
+              onClick={() => setIsRecording(r => !r)}
+              className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${isRecording ? 'text-red-500' : ''}`}
+              aria-pressed={isRecording ? "true" : "false"}
+              title={isRecording ? 'Stop recording' : 'Start voice input'}
+            >
+              {isRecording ? 'Stop' : 'Mic'}
+            </button>
+
+            <Button 
+              type="submit"
+              className="border-2 border-foreground bg-foreground text-background hover:bg-background hover:text-foreground font-mono font-bold text-lg px-8 py-6 transition-colors"
+            >
+              {translations[language].send}
+            </Button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Index;
