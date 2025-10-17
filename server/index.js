@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { SpeechClient } from '@google-cloud/speech';
-import { Storage } from '@google-cloud/storage';
 import dotenv from 'dotenv';
 
 // Load environment variables from .env file
@@ -13,7 +12,6 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '30mb' }));
 
 const client = new SpeechClient();
-const storage = new Storage();
 
 function mimeToEncoding(mimeType) {
   if (!mimeType) return 'LINEAR16';
@@ -27,24 +25,10 @@ function mimeToEncoding(mimeType) {
 
 app.post('/api/transcribe', async (req, res) => {
   try {
-    // Accept either direct base64 or a GCS key (gcsKey)
-    const { audioBase64, mimeType, languageCode = 'en-US', gcsKey } = req.body;
+    const { audioBase64, mimeType, languageCode = 'en-US' } = req.body;
+    if (!audioBase64) return res.status(400).json({ error: 'audioBase64 required' });
 
-    let base64 = audioBase64;
-
-    if (!base64 && gcsKey) {
-      // Download object from GCS and convert to base64
-      const bucketName = process.env.AUDIO_BUCKET;
-      if (!bucketName) return res.status(500).json({ error: 'AUDIO_BUCKET env required' });
-      const file = storage.bucket(bucketName).file(gcsKey);
-      const [exists] = await file.exists();
-      if (!exists) return res.status(404).json({ error: 'gcsKey not found' });
-      const [contents] = await file.download();
-      base64 = contents.toString('base64');
-      // Try to infer mimeType if not provided
-    }
-
-    if (!base64) return res.status(400).json({ error: 'audioBase64 or gcsKey required' });
+    const base64 = audioBase64.replace(/^data:.*;base64,/, '');
 
     const encoding = mimeToEncoding(mimeType);
 
@@ -54,8 +38,9 @@ app.post('/api/transcribe', async (req, res) => {
       enableAutomaticPunctuation: true,
     };
 
+    // For WEBM_OPUS and OGG_OPUS, we must specify a sample rate
     if (encoding === 'WEBM_OPUS' || encoding === 'OGG_OPUS') {
-      config.sampleRateHertz = 48000;
+      config.sampleRateHertz = 48000; // WebM/Opus typically uses 48kHz
     }
 
     const request = {
@@ -73,30 +58,6 @@ app.post('/api/transcribe', async (req, res) => {
     res.json({ transcript, raw: response });
   } catch (err) {
     console.error('Transcribe error', err);
-    res.status(500).json({ error: err.message || String(err) });
-  }
-});
-
-// Presign endpoint for direct browser upload to GCS
-app.post('/api/presign', async (req, res) => {
-  try {
-    const { fileName, contentType } = req.body;
-    if (!fileName || !contentType) return res.status(400).json({ error: 'fileName & contentType required' });
-    const bucketName = process.env.AUDIO_BUCKET;
-    if (!bucketName) return res.status(500).json({ error: 'AUDIO_BUCKET env required' });
-
-    const file = storage.bucket(bucketName).file(`uploads/${Date.now()}-${fileName}`);
-    const expires = Date.now() + 5 * 60 * 1000; // 5 minutes
-    const [url] = await file.getSignedUrl({
-      version: 'v4',
-      action: 'write',
-      expires,
-      contentType,
-    });
-
-    res.json({ url, key: file.name, expires });
-  } catch (err) {
-    console.error('Presign error', err);
     res.status(500).json({ error: err.message || String(err) });
   }
 });
