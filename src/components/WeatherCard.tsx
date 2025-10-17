@@ -1,4 +1,5 @@
 import { Card } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/useLanguage';
 
 export interface WeatherCardProps {
   location: string;
@@ -21,6 +22,28 @@ export function WeatherCard({
   windSpeed,
   icon,
 }: WeatherCardProps) {
+  const { language } = useLanguage();
+
+  const labels = {
+    en: {
+      feelsLike: 'FEELS LIKE',
+      precip: 'PRECIP',
+      humidity: 'HUMIDITY',
+      wind: 'WIND',
+      kmh: 'km/h',
+      c: 'C',
+    },
+    jp: {
+      feelsLike: '体感',
+      precip: '降水',
+      humidity: '湿度',
+      wind: '風速',
+      kmh: 'km/h',
+      c: '℃',
+    },
+  } as const;
+
+  const L = labels[language];
   return (
     <Card className="w-full max-w-md p-6 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-4">
       {/* Location Header */}
@@ -38,10 +61,10 @@ export function WeatherCard({
             <span className="text-6xl font-bold font-mono">
               {Math.round(temperature)}°
             </span>
-            <span className="text-2xl font-mono ml-2 text-gray-600">C</span>
+            <span className="text-2xl font-mono ml-2 text-gray-600">{L.c}</span>
           </div>
           <div className="mt-2 text-sm font-mono text-gray-600">
-            FEELS LIKE {Math.round(feelsLike)}°C
+            {L.feelsLike} {Math.round(feelsLike)}{L.c}
           </div>
         </div>
 
@@ -67,7 +90,7 @@ export function WeatherCard({
         {/* Precipitation */}
         <div>
           <div className="text-xs font-mono text-gray-600 uppercase mb-1">
-            PRECIP
+            {L.precip}
           </div>
           <div className="text-2xl font-bold font-mono">
             {precipitation}%
@@ -77,7 +100,7 @@ export function WeatherCard({
         {/* Humidity */}
         <div>
           <div className="text-xs font-mono text-gray-600 uppercase mb-1">
-            HUMIDITY
+            {L.humidity}
           </div>
           <div className="text-2xl font-bold font-mono">
             {humidity}%
@@ -87,13 +110,13 @@ export function WeatherCard({
         {/* Wind Speed */}
         <div>
           <div className="text-xs font-mono text-gray-600 uppercase mb-1">
-            WIND
+            {L.wind}
           </div>
           <div className="text-2xl font-bold font-mono">
             {Math.round(windSpeed)}
           </div>
           <div className="text-xs font-mono text-gray-600">
-            km/h
+            {L.kmh}
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { BlobAnimation } from '@/components/BlobAnimation';
 import { ChatMessage } from '@/components/ChatMessage';
 import { WeatherCard, type WeatherCardProps } from '@/components/WeatherCard';
 import { LanguageToggle } from '@/components/LanguageToggle';
+import { useLanguage } from '@/contexts/useLanguage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import useAudioLevel from '@/hooks/use-audio-level';
@@ -24,7 +25,8 @@ const Index = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const levels = useAudioLevel(isRecording);
-  const [language, setLanguage] = useState<'en' | 'jp'>('en');
+  // language is provided by context
+  const { language } = useLanguage();
   const [hasStartedChat, setHasStartedChat] = useState(false);
   const [userLocation, setUserLocation] = useState<LocationData | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -38,6 +40,16 @@ const Index = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Update document language and title when selected language changes
+  useEffect(() => {
+    document.title = language === 'en' ? 'Bean Jam Bot | AI Chat Assistant' : 'ビーンジャムボット | AIチャットアシスタント';
+    try {
+      document.documentElement.lang = language === 'en' ? 'en' : 'ja';
+    } catch (e) {
+      // ignore in environments without document
+    }
+  }, [language]);
 
   // Fetch user location on mount (silently in background)
   useEffect(() => {
@@ -57,14 +69,27 @@ const Index = () => {
     fetchLocation();
   }, []);
 
+  // Keep translations here for UI strings
   const translations = {
     en: {
       placeholder: 'Type your message...',
       send: 'SEND',
+      title: 'BEAN JAM BOT',
+      subtitle: 'Start a conversation',
+      startRecording: 'Start voice input',
+      stopRecording: 'Stop recording',
+      mic: 'Mic',
+      stop: 'Stop',
     },
     jp: {
       placeholder: 'メッセージを入力...',
       send: '送信',
+      title: 'ビーンジャムボット',
+      subtitle: '会話を始める',
+      startRecording: '音声入力開始',
+      stopRecording: '録音停止',
+      mic: 'マイク',
+      stop: '停止',
     },
   };
 
@@ -149,20 +174,17 @@ const Index = () => {
       <BlobAnimation isLoading={isLoading || isCreating || isRecording} isBehind={hasStartedChat} mode={isCreating ? 'create' : 'normal'} levels={levels} />
       
       <div className="fixed top-0 left-0 right-0 flex justify-center pt-6 z-20">
-        <LanguageToggle 
-          language={language} 
-          onToggle={() => setLanguage(lang => lang === 'en' ? 'jp' : 'en')} 
-        />
+        <LanguageToggle />
       </div>
 
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-8">
         {!hasStartedChat ? (
           <div className="text-center space-y-8">
             <h1 className="font-mono text-6xl font-bold text-foreground tracking-tight">
-              {language === 'en' ? 'BEAN JAM BOT' : 'ビーンジャムボット'}
+              {translations[language].title}
             </h1>
             <p className="font-mono text-lg text-muted-foreground">
-              {language === 'en' ? 'Start a conversation' : '会話を始める'}
+              {translations[language].subtitle}
             </p>
           </div>
         ) : (
@@ -206,10 +228,9 @@ const Index = () => {
                 type="button"
                 onClick={() => setIsRecording(r => !r)}
                 className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${isRecording ? 'text-red-500' : ''}`}
-                aria-pressed={isRecording ? "true" : "false"}
-                title={isRecording ? 'Stop recording' : 'Start voice input'}
+                title={isRecording ? translations[language].stopRecording : translations[language].startRecording}
               >
-                {isRecording ? 'Stop' : 'Mic'}
+                {isRecording ? translations[language].stop : translations[language].mic}
               </button>
 
               <Button 
@@ -235,10 +256,9 @@ const Index = () => {
               type="button"
               onClick={() => setIsRecording(r => !r)}
               className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${isRecording ? 'text-red-500' : ''}`}
-              aria-pressed={isRecording ? "true" : "false"}
-              title={isRecording ? 'Stop recording' : 'Start voice input'}
+              title={isRecording ? translations[language].stopRecording : translations[language].startRecording}
             >
-              {isRecording ? 'Stop' : 'Mic'}
+              {isRecording ? translations[language].stop : translations[language].mic}
             </button>
 
             <Button 
