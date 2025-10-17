@@ -34,7 +34,11 @@ export default function useAudioRecorder() {
   async function sendToServer(blob: Blob, languageCode = 'en-US') {
     const arrayBuffer = await blob.arrayBuffer();
     const base64 = bufferToBase64(arrayBuffer);
-    const resp = await fetch('/api/transcribe', {
+    // Prefer environment-configured endpoint (e.g., Lambda Function URL),
+    // fallback to local proxy route if not provided.
+  const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env || {};
+  const TRANSCRIBE_URL = env.VITE_TRANSCRIBE_API_URL || '/api/transcribe';
+    const resp = await fetch(TRANSCRIBE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ audioBase64: base64, mimeType: blob.type, languageCode }),
