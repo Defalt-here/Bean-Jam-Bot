@@ -32,12 +32,25 @@ export default function useAudioRecorder() {
   }
 
   async function sendToServer(blob: Blob, languageCode = 'en-US') {
-    const arrayBuffer = await blob.arrayBuffer();
-    const base64 = bufferToBase64(arrayBuffer);
+    // Use presigned upload to GCS to avoid sending large base64 payloads through the API
+    const fileName = `recording.webm`;
+    const presignResp = await fetch('/api/presign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fileName, contentType: blob.type }),
+    });
+    if (!presignResp.ok) throw new Error(await presignResp.text());
+    const { url, key } = await presignResp.json();
+
+    // Upload directly to GCS
+    const putResp = await fetch(url, { method: 'PUT', headers: { 'Content-Type': blob.type }, body: blob });
+    if (!putResp.ok) throw new Error('Upload failed');
+
+    // Notify backend to transcribe by providing gcsKey
     const resp = await fetch('/api/transcribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ audioBase64: base64, mimeType: blob.type, languageCode }),
+      body: JSON.stringify({ gcsKey: key, mimeType: blob.type, languageCode }),
     });
     if (!resp.ok) throw new Error(await resp.text());
     return resp.json();

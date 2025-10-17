@@ -1,9 +1,9 @@
-FROM node:18-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY package.json package-lock.json* ./
 
 # Install dependencies
 RUN npm ci --only=production
@@ -11,15 +11,10 @@ RUN npm ci --only=production
 # Copy server code
 COPY server ./server
 
-# Copy service account (will be overridden by mount in production)
-# In production, mount secret as volume or use env var
-COPY src/Keys/*.json ./service-account.json
-
-# Set environment variable
-ENV GOOGLE_APPLICATION_CREDENTIALS=/app/service-account.json
-ENV PORT=3001
+# In Cloud Run, use Workload Identity or Secret Manager. Do NOT copy service account JSON into the image.
+ENV PORT=8080
 ENV NODE_ENV=production
 
-EXPOSE 3001
+EXPOSE 8080
 
 CMD ["node", "server/index.js"]

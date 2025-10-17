@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: Bean Jam Bot API
+  version: 1.0.0
+servers:
+  - url: https://{gateway_host}
+    variables:
+      gateway_host:
+        default: YOUR_API_GATEWAY_HOST
+paths:
+  /api/presign:
+    post:
+      summary: Issue a signed URL for browser upload to Cloud Storage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fileName:
+                  type: string
+                contentType:
+                  type: string
+              required: [fileName, contentType]
+      responses:
+        '200':
+          description: Signed URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                  key:
+                    type: string
+  /api/transcribe:
+    post:
+      summary: Transcribe audio stored in Cloud Storage or directly provided as base64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gcsKey:
+                  type: string
+                audioBase64:
+                  type: string
+                mimeType:
+                  type: string
+                languageCode:
+                  type: string
+      responses:
+        '200':
+          description: Transcript
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transcript:
+                    type: string
+*** End Patch
