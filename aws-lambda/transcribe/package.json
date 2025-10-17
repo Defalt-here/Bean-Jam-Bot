@@ -1,0 +1,12 @@
+{
+  "name": "bean-jam-transcribe-lambda",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for Google Cloud Speech-to-Text transcription",
+  "main": "index.js",
+  "scripts": {
+    "package": "npm install --production && zip -r function.zip . -x '*.git*' 'node_modules/.bin/*'"
+  },
+  "dependencies": {
+    "@google-cloud/speech": "^7.2.1"
+  }
+}
