@@ -2,7 +2,7 @@
 
 <div align="center">
 
-**A Modern Bilingual AI Restaurant & Dating Spot Recommender**
+**A Modern Bilingual AI Restaurant & Dating Assistant**
 
 *Powered by Google Gemini AI with Voice Recognition & Dynamic UI*
 
@@ -10,6 +10,7 @@
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://cloud.google.com/)
+[![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 
 </div>
 
@@ -22,6 +23,12 @@
 - Natural language understanding for planning dates, restaurant hopping sessions, or getting quick recommendations
 - Conversation history tracking for coherent, multi-turn dialogues
 - Smart itinerary planning assistance
+
+### 🗺️ Restaurant & Dating Planning Intelligence
+- Curates date ideas based on vibe (cozy, adventurous, budget, premium) and time of day
+- Builds restaurant-hopping routes with proximity awareness and cuisine diversity
+- Adjusts plans using live weather context (e.g., indoor/outdoor, sunset views)
+- Bilingual recommendations (EN/JP) with culturally relevant suggestions
 
 ### 🎤 Advanced Voice Input
 - **Google Cloud Speech-to-Text** integration with 48kHz WEBM_OPUS encoding
@@ -64,28 +71,53 @@
 - Brutalist shadow effects for depth
 - Audio level equalizer overlay during voice input
 
-### 🏗️ Architecture
+### 🏗️ Architecture (Production)
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Browser Client                       │
-│  ┌─────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │   React UI  │  │ Voice Input  │  │ Blob Anim.   │  │
-│  │   + Vite    │  │ MediaRecorder│  │ Canvas/CSS   │  │
-│  └─────────────┘  └──────────────┘  └──────────────┘  │
-└─────────────┬───────────────┬───────────────┬──────────┘
-              │               │               │
-              ▼               ▼               ▼
-    ┌─────────────────┐ ┌────────────┐ ┌────────────┐
-    │  Gemini API     │ │ Weather API│ │  /api/     │
-    │  (Direct)       │ │ (Direct)   │ │ transcribe │
-    └─────────────────┘ └────────────┘ └─────┬──────┘
-                                              │
-                                              ▼
-                                    ┌──────────────────┐
-                                    │ Google Cloud STT │
-                                    │   (Serverless)   │
-                                    └──────────────────┘
+┌──────────────────────────────────────────────────────────────────────────┐
+│                              Browser Client                              │
+│  React + Vite UI  •  Voice (MediaRecorder)  •  Blob Animation  •  EN/JP │
+└───────────────┬───────────────────────────────┬──────────────────────────┘
+    │                               │
+    │ fetch(JSON)                   │ Geolocation / Forecast
+    ▼                               ▼
+      ┌──────────────────────────┐      ┌───────────────────────┐
+      │  AWS API Gateway (HTTP) │      │  WeatherAPI.com       │
+      │  Route: POST /transcribe│      │  (Direct from client) │
+      └──────────────┬───────────┘      └───────────┬───────────┘
+         │ Integration (v2.0)            │
+         ▼                                ▼
+       ┌────────────────┐               ┌────────────────────┐
+       │  AWS Lambda    │               │ Google Gemini API   │
+       │  Node.js 20    │               │ (Direct from client)│
+       └──────┬─────────┘               └────────────────────┘
+        │
+        ▼
+    ┌────────────────────────┐
+    │ Google Cloud STT (v2) │
+    │ Speech-to-Text API    │
+    └────────────────────────┘
+```
+
+Mermaid view
+
+```mermaid
+flowchart LR
+    subgraph Client[Browser Client]
+      UI[React + Vite UI]\nEN/JP Toggle
+      REC[MediaRecorder]\nVoice Capture
+      UI -->|fetch JSON| APIGW
+      REC -->|webm/opus| UI
+    end
+    APIGW[API Gateway HTTP API\nPOST /transcribe]\nCORS @ Edge
+    LAMBDA[AWS Lambda\nNode.js 20]
+    GCSTT[Google Cloud Speech-to-Text]
+    GEMINI[Google Gemini API]
+    WEATHER[WeatherAPI.com]
+    UI --> |Direct| GEMINI
+    UI --> |Direct| WEATHER
+    APIGW --> |v2.0 Integration| LAMBDA
+    LAMBDA --> GCSTT
 ```
 
 ## 🚀 Technology Stack
@@ -99,20 +131,21 @@
 | **AI Services** | Google Gemini 2.5 Flash, Google Cloud Speech-to-Text |
 | **APIs** | WeatherAPI.com, OpenStreetMap Nominatim |
 | **Backend (Dev)** | Node.js, Express |
-| **Backend (Prod)** | Vercel Functions / Netlify Functions |
+| **Backend (Prod)** | AWS API Gateway (HTTP) + AWS Lambda (Node.js 20) |
 | **Animation** | CSS Keyframes, RequestAnimationFrame, Web Audio API |
-| **Deployment** | Vercel, Netlify, Docker |
+| **Deployment** | AWS Lambda/API Gateway, Docker (optional) |
 
 ## 📁 Project Structure
 
 ```
 bean-jam-bot/
-├── api/                          # Vercel serverless functions
-│   └── transcribe.js            # Speech-to-text endpoint
-├── netlify/functions/           # Netlify serverless functions
-│   └── transcribe.js
-├── server/                      # Local development server
-│   └── index.js                # Express server for STT
+├── aws-lambda/
+│   └── transcribe/              # AWS Lambda (production)
+│       ├── index.js             # Handler (Google STT)
+│       ├── package.json
+│       └── function.zip         # Deployment artifact
+├── server/                      # Local development server (optional)
+│   └── index.js
 ├── src/
 │   ├── components/
 │   │   ├── ui/                 # Shadcn/ui components
@@ -136,9 +169,7 @@ bean-jam-bot/
 │   ├── App.tsx
 │   └── main.tsx
 ├── .env                         # Environment variables
-├── vercel.json                  # Vercel config
-├── netlify.toml                 # Netlify config
-└── Dockerfile                   # Docker containerization
+└── Dockerfile                   # Docker containerization (optional)
 ```
 
 ## 🛠️ Installation & Setup
@@ -176,6 +207,9 @@ VITE_GEMINI_API_KEY=AIzaSy...
 
 # WeatherAPI.com API Key
 VITE_WEATHER_API_KEY=your_weatherapi_key
+
+# Transcription API (API Gateway invoke URL)
+VITE_TRANSCRIBE_API_URL=https://<api-id>.execute-api.eu-north-1.amazonaws.com/transcribe
 ```
 
 ### 4. Run Development Servers
@@ -220,34 +254,42 @@ Open `http://localhost:8080` in your browser! 🎉
 
 ## 🌍 Deployment
 
-### Vercel (Recommended)
+### AWS (Production)
 
-```bash
-# Install Vercel CLI
-npm i -g vercel
+1) Package Lambda
 
-# Deploy
-vercel --prod
+```powershell
+cd aws-lambda/transcribe
+npm install --omit=dev
+Compress-Archive -Path @("index.js","package.json","node_modules") -DestinationPath function.zip -Force
 ```
 
-**Environment Variables in Vercel:**
-- `GOOGLE_APPLICATION_CREDENTIALS_JSON`: Paste entire service account JSON content
-- `VITE_GEMINI_API_KEY`: Your Gemini key
-- `VITE_WEATHER_API_KEY`: Your Weather API key
+2) Create/Configure Lambda (BeanJamTranscribe)
+- Runtime: Node.js 20.x
+- Memory: 512 MB • Timeout: 30s
+- Environment variable: `GOOGLE_SERVICE_ACCOUNT_KEY` = entire JSON of your Google service account (paste the JSON)
+- Upload `function.zip`
 
-### Netlify
+3) Create API Gateway (HTTP API)
+- Route: `POST /transcribe`
+- Integration: Lambda → BeanJamTranscribe • Payload format: `2.0`
+- CORS:
+  - Allow origins: `http://localhost:8080` (add prod domain later)
+  - Allow headers: `content-type`
+  - Allow methods: `POST`
+- Stage: `$default` with Auto-deploy ON
 
-```bash
-# Install Netlify CLI
-npm i -g netlify-cli
+4) Frontend config
+- Set `.env` → `VITE_TRANSCRIBE_API_URL=https://<api-id>.execute-api.eu-north-1.amazonaws.com/transcribe`
+- Restart Vite dev server and hard-refresh the browser
 
-# Deploy
-netlify deploy --prod
-```
+5) Optional: Health Check Route (no Lambda)
+- API Gateway → Routes → Create → GET /health
+- Integration: Mock Response
+- Response: 200 with body `{ "ok": true }`
+- Great for uptime dashboards and quick smoke tests
 
-Set the same environment variables in Netlify dashboard.
-
-### Docker
+### Docker (optional)
 
 ```bash
 docker build -t bean-jam-bot .
@@ -296,3 +338,44 @@ This project is open source and available under the MIT License.
 *Bean Jam Bot - Where AI meets beautiful design* ✨
 
 </div>
+
+## 🧰 Troubleshooting (AWS)
+
+- 405 Method Not Allowed
+  - Ensure route `POST /transcribe` is attached to your Lambda integration
+  - Toggle `$default` stage Auto-deploy OFF → ON to redeploy
+  - Verify you’re calling `/transcribe` path (not base URL)
+
+- CORS blocked (No/duplicate Access-Control-Allow-Origin)
+  - Let API Gateway own CORS; remove `Access-Control-*` headers from Lambda
+  - CORS in API: origins = your exact origin(s), methods = POST, headers = content-type
+
+- Function URL vs API Gateway
+  - Prefer API Gateway for production (auth, observability, routes)
+  - If using Function URL temporarily, set CORS there and avoid duplicate headers in Lambda
+
+## 🎤 Interview Talking Points
+
+- Designed a bilingual Restaurant & Dating Assistant that blends LLM reasoning (Gemini) with real-world context (weather, location, time)
+- Voice UX with MediaRecorder → AWS → Google STT for accurate, low-latency transcription
+- Production-grade serverless backend using AWS API Gateway (HTTP) + Lambda (Node 20), CORS handled at the edge
+- Clear separation of concerns: client calls AI/weather directly, serverless only handles audio STT for security and cost control
+- Robust CORS/HTTP handling (payload v2.0, OPTIONS, 405s) and environment-based routing via `VITE_TRANSCRIBE_API_URL`
+
+## 🎬 Demo
+
+Show the full flow in 15–30 seconds:
+
+- Start recording → speak a query (e.g., “Plan a cozy dinner date near Shibuya on Saturday”) → stop
+- Transcription appears, Gemini responds with plan + optional weather card
+- Blob animation reacts throughout
+
+Tips to capture a crisp GIF/video:
+- macOS: QuickTime → New Screen Recording → trim in Photos → convert to GIF (ezgif.com)
+- Windows: Xbox Game Bar (Win+G) or Clipchamp → export as MP4 → convert to GIF
+
+Add the GIF to this repo (e.g., `docs/demo.gif`) and embed:
+
+```markdown
+![Bean Jam Bot Demo](docs/demo.gif)
+```
