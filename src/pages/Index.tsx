@@ -44,7 +44,7 @@ const Index = () => {
 
   // Update document language and title when selected language changes
   useEffect(() => {
-    document.title = language === 'en' ? 'Bean Jam Bot | AI Chat Assistant' : 'ビーンジャムボット | AIチャットアシスタント';
+    document.title = language === 'en' ? 'Bean Jam Bot | Date planning AI' : 'ビーンジャムボット | デートプランニングAI';
     try {
       document.documentElement.lang = language === 'en' ? 'en' : 'ja';
     } catch (e) {
@@ -76,21 +76,25 @@ const Index = () => {
       placeholder: 'Type your message...',
       send: 'SEND',
       title: 'BEAN JAM BOT',
-      subtitle: 'Start a conversation',
+      subtitle: 'Ask beanie whether you should plan a restaurant hopping session or a date or just restaurant recommendations',
       startRecording: 'Start voice input',
       stopRecording: 'Stop recording',
       mic: 'Mic',
       stop: 'Stop',
+      recordingStarted: 'Recording started',
+      recordingHint: 'Press the mic button again to stop recording',
     },
     jp: {
       placeholder: 'メッセージを入力...',
       send: '送信',
       title: 'ビーンジャムボット',
-      subtitle: '会話を始める',
+      subtitle: 'ビーニーに、レストランホッピング、デート、またはおすすめレストランについて聞いてみよう！',
       startRecording: '音声入力開始',
       stopRecording: '録音停止',
       mic: 'マイク',
       stop: '停止',
+      recordingStarted: '録音開始',
+      recordingHint: 'マイクボタンをもう一度押すと録音を停止します',
     },
   };
 
@@ -232,6 +236,11 @@ const Index = () => {
                   if (!recorder.isRecording) {
                     try {
                       await recorder.start();
+                      toast({ 
+                        title: translations[language].recordingStarted, 
+                        description: translations[language].recordingHint,
+                        duration: 3000 
+                      });
                     } catch (err) {
                       toast({ title: language === 'en' ? 'Microphone error' : 'マイクエラー', description: String(err), variant: 'destructive' });
                     }
@@ -285,6 +294,11 @@ const Index = () => {
                 if (!recorder.isRecording) {
                   try {
                     await recorder.start();
+                    toast({ 
+                      title: translations[language].recordingStarted, 
+                      description: translations[language].recordingHint,
+                      duration: 3000 
+                    });
                   } catch (err) {
                     toast({ title: language === 'en' ? 'Microphone error' : 'マイクエラー', description: String(err), variant: 'destructive' });
                   }
