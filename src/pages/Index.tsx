@@ -7,6 +7,7 @@ import { useLanguage } from '@/contexts/useLanguage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import useAudioLevel from '@/hooks/use-audio-level';
+import useAudioRecorder from '@/hooks/use-audio-recorder';
 import { getGeminiService } from '@/lib/gemini';
 import { useToast } from '@/hooks/use-toast';
 import { getUserLocation, formatLocation, type LocationData } from '@/lib/location';
@@ -23,10 +24,10 @@ const Index = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const levels = useAudioLevel(isRecording);
   // language is provided by context
   const { language } = useLanguage();
+  const recorder = useAudioRecorder();
+  const levels = useAudioLevel(recorder.isRecording);
   const [hasStartedChat, setHasStartedChat] = useState(false);
   const [userLocation, setUserLocation] = useState<LocationData | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -171,7 +172,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      <BlobAnimation isLoading={isLoading || isCreating || isRecording} isBehind={hasStartedChat} mode={isCreating ? 'create' : 'normal'} levels={levels} />
+      <BlobAnimation isLoading={isLoading || isCreating || recorder.isRecording} isBehind={hasStartedChat} mode={isCreating ? 'create' : 'normal'} levels={levels} />
       
       <div className="fixed top-0 left-0 right-0 flex justify-center pt-6 z-20">
         <LanguageToggle />
@@ -226,11 +227,37 @@ const Index = () => {
               />
               <button
                 type="button"
-                onClick={() => setIsRecording(r => !r)}
-                className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${isRecording ? 'text-red-500' : ''}`}
-                title={isRecording ? translations[language].stopRecording : translations[language].startRecording}
+                onClick={async () => {
+                  // toggle recording via recorder hook
+                  if (!recorder.isRecording) {
+                    try {
+                      await recorder.start();
+                    } catch (err) {
+                      toast({ title: language === 'en' ? 'Microphone error' : 'マイクエラー', description: String(err), variant: 'destructive' });
+                    }
+                  } else {
+                    // stop, upload, transcribe
+                    const blob = await recorder.stop();
+                    const uploadingToast = toast({ title: language === 'en' ? 'Transcribing...' : '文字起こし中', description: '', duration: 10000 });
+                    try {
+                      const result = await recorder.sendToServer(blob, language === 'en' ? 'en-US' : 'ja-JP');
+                      toast({ title: language === 'en' ? 'Transcribed' : '文字起こし完了', description: result.transcript });
+                      // add as visible user message and send
+                      setMessages(prev => [...prev, { content: result.transcript, isUser: true }]);
+                      if (!hasStartedChat) setHasStartedChat(true);
+                      simulateResponse(result.transcript);
+                    } catch (err) {
+                      console.error('Upload/transcribe error', err);
+                      toast({ title: language === 'en' ? 'Transcription failed' : '文字起こし失敗', description: String(err), variant: 'destructive' });
+                    }
+                    // remove uploading toast if any
+                    try { uploadingToast?.dismiss?.(); } catch (e) { /* noop */ }
+                  }
+                }}
+                className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${recorder.isRecording ? 'text-red-500' : ''}`}
+                title={recorder.isRecording ? translations[language].stopRecording : translations[language].startRecording}
               >
-                {isRecording ? translations[language].stop : translations[language].mic}
+                {recorder.isRecording ? translations[language].stop : translations[language].mic}
               </button>
 
               <Button 
@@ -254,11 +281,33 @@ const Index = () => {
             />
             <button
               type="button"
-              onClick={() => setIsRecording(r => !r)}
-              className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${isRecording ? 'text-red-500' : ''}`}
-              title={isRecording ? translations[language].stopRecording : translations[language].startRecording}
+              onClick={async () => {
+                if (!recorder.isRecording) {
+                  try {
+                    await recorder.start();
+                  } catch (err) {
+                    toast({ title: language === 'en' ? 'Microphone error' : 'マイクエラー', description: String(err), variant: 'destructive' });
+                  }
+                } else {
+                  const blob = await recorder.stop();
+                  const uploadingToast = toast({ title: language === 'en' ? 'Transcribing...' : '文字起こし中', description: '', duration: 10000 });
+                  try {
+                    const result = await recorder.sendToServer(blob, language === 'en' ? 'en-US' : 'ja-JP');
+                    toast({ title: language === 'en' ? 'Transcribed' : '文字起こし完了', description: result.transcript });
+                    setMessages(prev => [...prev, { content: result.transcript, isUser: true }]);
+                    if (!hasStartedChat) setHasStartedChat(true);
+                    simulateResponse(result.transcript);
+                  } catch (err) {
+                    console.error('Upload/transcribe error', err);
+                    toast({ title: language === 'en' ? 'Transcription failed' : '文字起こし失敗', description: String(err), variant: 'destructive' });
+                  }
+                  try { uploadingToast?.dismiss?.(); } catch (e) { /* noop */ }
+                }
+              }}
+              className={`px-3 py-2 border-2 border-foreground bg-background hover:bg-foreground hover:text-background transition-colors duration-150 font-mono text-sm ${recorder.isRecording ? 'text-red-500' : ''}`}
+              title={recorder.isRecording ? translations[language].stopRecording : translations[language].startRecording}
             >
-              {isRecording ? translations[language].stop : translations[language].mic}
+              {recorder.isRecording ? translations[language].stop : translations[language].mic}
             </button>
 
             <Button 
