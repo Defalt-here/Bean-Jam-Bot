@@ -32,13 +32,20 @@ app.post('/api/transcribe', async (req, res) => {
 
     const encoding = mimeToEncoding(mimeType);
 
+    const config = {
+      encoding,
+      languageCode,
+      enableAutomaticPunctuation: true,
+    };
+
+    // For WEBM_OPUS and OGG_OPUS, we must specify a sample rate
+    if (encoding === 'WEBM_OPUS' || encoding === 'OGG_OPUS') {
+      config.sampleRateHertz = 48000; // WebM/Opus typically uses 48kHz
+    }
+
     const request = {
       audio: { content: base64 },
-      config: {
-        encoding,
-        languageCode,
-        enableAutomaticPunctuation: true,
-      },
+      config,
     };
 
     const [response] = await client.recognize(request);
