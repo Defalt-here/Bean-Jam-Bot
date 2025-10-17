@@ -11,15 +11,24 @@ export const BlobAnimation = ({ isLoading, isBehind, mode = 'normal', levels }: 
   const blobRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const levelsRef = useRef<Float32Array | null>(null);
+  const loadingIntensityRef = useRef<number>(0);
 
   useEffect(() => {
     if (!blobRef.current) return;
 
     const el = blobRef.current;
 
+    // Add smooth transitions to transform and filter
+    el.style.transition = 'transform 0.8s ease-out, filter 1.2s ease-in-out';
+
     const animate = () => {
       if (!el) return;
       const time = performance.now() * 0.001;
+
+      // Smoothly interpolate loading intensity for natural transitions
+      const targetIntensity = isLoading ? 1 : 0;
+      const lerpSpeed = 0.05; // Adjust for faster/slower transitions
+      loadingIntensityRef.current += (targetIntensity - loadingIntensityRef.current) * lerpSpeed;
 
       // read latest audio levels (if any) to drive visual reactions
       const currentLevels = levelsRef.current;
@@ -39,7 +48,9 @@ export const BlobAnimation = ({ isLoading, isBehind, mode = 'normal', levels }: 
         audioBoost = Math.max(0, (avg - 0.02) / 0.45);
       }
 
-      const baseIntensity = isLoading ? 1.6 : 0.8;
+      // Use interpolated loading intensity instead of discrete isLoading
+      const loadingFactor = loadingIntensityRef.current;
+      const baseIntensity = 0.8 + (loadingFactor * 0.8); // Smoothly go from 0.8 to 1.6
       const modeBoost = mode === 'create' ? 1.6 : 1;
       // audioBoost increases intensity dynamically when user speaks
       const intensity = baseIntensity * modeBoost * (1 + audioBoost * (mode === 'create' ? 1.6 : 1.2));
@@ -51,11 +62,13 @@ export const BlobAnimation = ({ isLoading, isBehind, mode = 'normal', levels }: 
 
       el.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`;
 
-  // adjust blur/saturate based on audio activity
-  // when the blob is behind (chat mode) use a lower base blur so it appears sharper
-  const baseBlur = isBehind ? 12 : 26;
-  const blur = baseBlur - audioBoost * (isBehind ? 6 : 10);
-  const saturate = 120 + audioBoost * (isBehind ? 40 : 80);
+      // adjust blur/saturate based on audio activity
+      // when the blob is behind (chat mode) use a lower base blur so it appears sharper
+      // Smoothly interpolate blur based on loading state (reuse loadingFactor from above)
+      const targetBaseBlur = isBehind ? 8 : 26;
+      const baseBlur = targetBaseBlur - (loadingFactor * (isBehind ? 2 : 6));
+      const blur = baseBlur - audioBoost * (isBehind ? 4 : 10);
+      const saturate = 120 + audioBoost * (isBehind ? 40 : 80) + (loadingFactor * 30);
       el.style.filter = `blur(${blur}px) saturate(${saturate}%)`;
 
       // update inner glow intensity if present
@@ -84,8 +97,9 @@ export const BlobAnimation = ({ isLoading, isBehind, mode = 'normal', levels }: 
   }, [levels]);
 
   // colors and intensity vary for 'create' mode
-  const rootClasses = `fixed inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-700 ${isBehind ? 'z-0 opacity-70' : 'z-20 opacity-100'}`;
-  const blobBase = `relative w-96 h-96 rounded-full blob-filter mix-blend-screen transition-all duration-300 ${isLoading ? 'opacity-100' : 'opacity-60'}`;
+  const rootClasses = `fixed inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-1000 ${isBehind ? 'z-0 opacity-100' : 'z-20 opacity-100'}`;
+  const rotateClass = isLoading ? 'blob-rotate-fast' : '';
+  const blobBase = `relative w-96 h-96 rounded-full blob-filter ${rotateClass} mix-blend-screen transition-all duration-1000 ${isLoading ? 'opacity-100' : 'opacity-60'}`;
   const blobBgClass = mode === 'create' ? 'blob-bg-create' : 'blob-bg-normal';
   const shadowClass = mode === 'create' ? 'blob-create-shadow' : 'blob-normal-shadow';
 
