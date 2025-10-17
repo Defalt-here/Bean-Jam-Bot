@@ -6,11 +6,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 
 # Install dependencies
-# NOTE: using `npm install --omit=dev` here is a temporary/workaround to avoid
-# build failures when package.json and package-lock.json are out of sync.
-# Recommended: run `npm install` locally, commit the updated package-lock.json,
-# and revert this line back to `npm ci --omit=dev` (or `npm ci --only=production`).
-RUN npm install --omit=dev
+RUN npm ci --only=production
 
 # Copy server code
 COPY server ./server
