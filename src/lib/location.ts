@@ -36,77 +36,39 @@ async function getGPSLocation(): Promise<LocationData | null> {
         console.log('GPS location granted:', { latitude, longitude });
         
         try {
-          // Try multiple reverse geocoding services for better accuracy
-          
-          // Method 1: Try OpenStreetMap Nominatim (primary - more accurate for most locations)
-          try {
-            console.log('Attempting reverse geocoding with OpenStreetMap...');
-            const osmResponse = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`,
-              {
-                headers: {
-                  'User-Agent': 'BeanJamBot-ChatApp',
-                },
-              }
-            );
+          // Use OpenStreetMap Nominatim for reverse geocoding
+          console.log('Attempting reverse geocoding with OpenStreetMap...');
+          const osmResponse = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`,
+            {
+              headers: {
+                'User-Agent': 'BeanJamBot-ChatApp',
+              },
+            }
+          );
 
-            if (osmResponse.ok) {
-              const osmData = await osmResponse.json();
-              console.log('OpenStreetMap response:', osmData);
-              const address = osmData.address || {};
-              
-              const city = address.city || address.town || address.village || address.hamlet || 
-                          address.municipality || address.county;
-              const region = address.state || address.province || address.region;
-              const country = address.country;
-              
-              if (city) {
-                console.log('✅ City found via OpenStreetMap:', city);
-                resolve({
-                  city,
-                  region,
-                  country,
-                  latitude,
-                  longitude,
-                  source: 'gps',
-                });
-                return;
-              }
-            }
-          } catch (error) {
-            console.warn('OpenStreetMap geocoding failed:', error);
-          }
-          
-          // Method 2: Try BigDataCloud as fallback
-          try {
-            console.log('Attempting reverse geocoding with BigDataCloud...');
-            const bdcResponse = await fetch(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-            );
+          if (osmResponse.ok) {
+            const osmData = await osmResponse.json();
+            console.log('OpenStreetMap response:', osmData);
+            const address = osmData.address || {};
             
-            if (bdcResponse.ok) {
-              const bdcData = await bdcResponse.json();
-              console.log('BigDataCloud response:', bdcData);
-              
-              const city = bdcData.city || bdcData.locality || bdcData.principalSubdivision;
-              const region = bdcData.principalSubdivision || bdcData.principalSubdivisionCode;
-              const country = bdcData.countryName;
-              
-              if (city) {
-                console.log('✅ City found via BigDataCloud:', city);
-                resolve({
-                  city,
-                  region,
-                  country,
-                  latitude,
-                  longitude,
-                  source: 'gps',
-                });
-                return;
-              }
+            const city = address.city || address.town || address.village || address.hamlet || 
+                        address.municipality || address.county;
+            const region = address.state || address.province || address.region;
+            const country = address.country;
+            
+            if (city) {
+              console.log('✅ City found via OpenStreetMap:', city);
+              resolve({
+                city,
+                region,
+                country,
+                latitude,
+                longitude,
+                source: 'gps',
+              });
+              return;
             }
-          } catch (error) {
-            console.warn('BigDataCloud geocoding failed:', error);
           }
           
           // If no city found but we have coords, return with coords only
@@ -149,9 +111,6 @@ async function getGPSLocation(): Promise<LocationData | null> {
  * Fallback: Get approximate location using IP address
  */
 async function getIPLocation(): Promise<LocationData | null> {
-  // Try multiple IP geolocation services for reliability
-  
-  // Method 1: Try ipapi.co (accurate, free tier)
   try {
     console.log('Attempting IP location with ipapi.co...');
     const response = await fetch('https://ipapi.co/json/');
@@ -176,32 +135,7 @@ async function getIPLocation(): Promise<LocationData | null> {
     console.warn('ipapi.co failed:', error);
   }
   
-  // Method 2: Try ip-api.com as fallback (free, unlimited for non-commercial)
-  try {
-    console.log('Attempting IP location with ip-api.com...');
-    const response = await fetch('http://ip-api.com/json/');
-    
-    if (response.ok) {
-      const data = await response.json();
-      console.log('ip-api.com response:', data);
-      
-      if (data.status === 'success' && data.city) {
-        console.log('✅ City found via ip-api.com:', data.city);
-        return {
-          city: data.city,
-          region: data.regionName,
-          country: data.country,
-          latitude: data.lat,
-          longitude: data.lon,
-          source: 'ip',
-        };
-      }
-    }
-  } catch (error) {
-    console.warn('ip-api.com failed:', error);
-  }
-  
-  console.warn('⚠️ All IP location services failed');
+  console.warn('⚠️ IP location service failed');
   return null;
 }
 
