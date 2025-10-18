@@ -41,6 +41,8 @@ export interface WeatherData {
         };
         daily_chance_of_rain: number;
         daily_chance_of_snow: number;
+        avghumidity: number;
+        maxwind_kph: number;
       };
     }>;
   };
@@ -57,10 +59,19 @@ export interface WeatherRequestPayload {
  * Format location data as REST API payload for weather service
  */
 export function formatWeatherPayload(location: LocationData, days: number = 1): WeatherRequestPayload {
-  // Prefer lat,lon for accuracy
-  const query = location.latitude && location.longitude
-    ? `${location.latitude},${location.longitude}`
-    : location.city || 'London'; // fallback to city or default
+  // Prefer lat,lon for accuracy (WeatherAPI.com accepts coordinates)
+  let query: string;
+  
+  if (location.latitude && location.longitude) {
+    query = `${location.latitude},${location.longitude}`;
+    console.log('📍 Using GPS coordinates for weather:', query);
+  } else if (location.city) {
+    query = location.city;
+    console.log('📍 Using city name for weather:', query);
+  } else {
+    query = 'London'; // Ultimate fallback
+    console.warn('⚠️ No location data available, using default: London');
+  }
 
   return {
     q: query,
@@ -242,8 +253,8 @@ export function extractWeatherCardData(weather: WeatherData, dayIndex: number = 
       feelsLike: forecastDay.day.avgtemp_c, // Forecast doesn't have feels like, use avg
       condition: forecastDay.day.condition.text,
       precipitation: forecastDay.day.daily_chance_of_rain || forecastDay.day.daily_chance_of_snow || 0,
-      humidity: 0, // Day forecast doesn't include humidity
-      windSpeed: 0, // Day forecast doesn't include wind speed in day summary
+      humidity: forecastDay.day.avghumidity,
+      windSpeed: forecastDay.day.maxwind_kph,
       icon: forecastDay.day.condition.icon,
     };
   }
