@@ -119,16 +119,34 @@ export class GeminiService {
     };
 
     try {
-      const response = await fetch(
-        `${this.baseUrl}/models/${this.model}:generateContent?key=${this.apiKey}`,
-        {
+      // If a proxy URL is configured, use it (API Gateway + Lambda); otherwise call Google directly
+      const proxyUrl = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_GEMINI_PROXY_URL;
+      let response: Response;
+      if (proxyUrl) {
+        const proxyBody = {
+          message,
+          language,
+          conversationHistory,
+          userLocation,
+          weatherData,
+        };
+        response = await fetch(proxyUrl, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(proxyBody),
+        });
+      } else {
+        response = await fetch(
+          `${this.baseUrl}/models/${this.model}:generateContent?key=${this.apiKey}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          }
+        );
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -137,17 +155,33 @@ export class GeminiService {
         );
       }
 
-      const data: GeminiResponse = await response.json();
+      const data = await response.json();
 
-      if (data.error) {
-        throw new Error(data.error.message);
+      // If using proxy, response is already formatted { response, showWeatherCard }
+      if (proxyUrl) {
+        if (!data.response) {
+          throw new Error('No response from proxy');
+        }
+        // Sanitize markdown-like formatting to avoid stray * or code fences in UI
+        const { sanitizeMarkdown } = await import('./utils');
+        const cleanText = sanitizeMarkdown(data.response);
+        return {
+          response: cleanText,
+          showWeatherCard: data.showWeatherCard || false
+        };
       }
 
-      if (!data.candidates || data.candidates.length === 0) {
+      // Direct Gemini API response shape
+      const geminiData = data as GeminiResponse;
+      if (geminiData.error) {
+        throw new Error(geminiData.error.message);
+      }
+
+      if (!geminiData.candidates || geminiData.candidates.length === 0) {
         throw new Error('No response generated from Gemini');
       }
 
-      const textParts = data.candidates[0].content.parts;
+      const textParts = geminiData.candidates[0].content.parts;
       let responseText = textParts.map(part => part.text).join('');
 
       // Check if Gemini wants to show the weather card
@@ -159,8 +193,12 @@ export class GeminiService {
         responseText = responseText.replace(weatherMarker, '').trim();
       }
 
+      // Sanitize markdown-like formatting to avoid stray * or code fences in UI
+      const { sanitizeMarkdown } = await import('./utils');
+      const cleanText = sanitizeMarkdown(responseText);
+
       return {
-        response: responseText,
+        response: cleanText,
         showWeatherCard
       };
     } catch (error) {

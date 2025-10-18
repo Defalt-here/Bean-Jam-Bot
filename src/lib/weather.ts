@@ -74,11 +74,8 @@ export function formatWeatherPayload(location: LocationData, days: number = 1): 
  * Fetch weather data from WeatherAPI.com
  */
 export async function getWeather(location: LocationData, days: number = 1): Promise<WeatherData> {
+  const proxyUrl = (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_WEATHER_PROXY_URL;
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY || '';
-  
-  if (!apiKey) {
-    throw new Error('Weather API key is not configured. Please add VITE_WEATHER_API_KEY to your .env file.');
-  }
 
   const payload = formatWeatherPayload(location, days);
   
@@ -92,10 +89,23 @@ export async function getWeather(location: LocationData, days: number = 1): Prom
   });
 
   try {
-    // Use forecast endpoint for both current and future weather
-    const response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?${params.toString()}`
-    );
+    let response: Response;
+    if (proxyUrl) {
+      // Call our proxy (API Gateway + Lambda) so the API key stays server-side
+      const body = { q: payload.q, days: payload.days };
+      response = await fetch(proxyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } else {
+      if (!apiKey) {
+        throw new Error('Weather API key is not configured. Please add VITE_WEATHER_API_KEY to your .env file.');
+      }
+      response = await fetch(
+        `https://api.weatherapi.com/v1/forecast.json?${params.toString()}`
+      );
+    }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));

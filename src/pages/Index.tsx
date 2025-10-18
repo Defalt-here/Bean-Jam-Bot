@@ -12,6 +12,7 @@ import { getGeminiService } from '@/lib/gemini';
 import { useToast } from '@/hooks/use-toast';
 import { getUserLocation, formatLocation, type LocationData } from '@/lib/location';
 import { getWeather, formatWeatherSummary, parseDateFromMessage, extractWeatherCardData } from '@/lib/weather';
+import { logBrowserInfo, isVoiceRecordingSupported, getCompatibilityMessage } from '@/lib/browser-compat';
 
 interface Message {
   content: string;
@@ -56,6 +57,9 @@ const Index = () => {
   useEffect(() => {
     if (locationFetchedRef.current) return;
     locationFetchedRef.current = true;
+
+    // Log browser compatibility info on first load
+    logBrowserInfo();
 
     const fetchLocation = async () => {
       try {
@@ -232,6 +236,20 @@ const Index = () => {
               <button
                 type="button"
                 onClick={async () => {
+                  // Check browser compatibility first
+                  if (!recorder.isRecording) {
+                    const compatMessage = getCompatibilityMessage();
+                    if (compatMessage) {
+                      toast({ 
+                        title: language === 'en' ? 'Voice Recording Not Supported' : '音声録音非対応', 
+                        description: compatMessage,
+                        variant: 'destructive',
+                        duration: 8000
+                      });
+                      return;
+                    }
+                  }
+                  
                   // toggle recording via recorder hook
                   if (!recorder.isRecording) {
                     try {
@@ -242,7 +260,13 @@ const Index = () => {
                         duration: 3000 
                       });
                     } catch (err) {
-                      toast({ title: language === 'en' ? 'Microphone error' : 'マイクエラー', description: String(err), variant: 'destructive' });
+                      const errorMsg = err instanceof Error ? err.message : String(err);
+                      toast({ 
+                        title: language === 'en' ? 'Microphone error' : 'マイクエラー', 
+                        description: errorMsg, 
+                        variant: 'destructive',
+                        duration: 6000
+                      });
                     }
                   } else {
                     // stop, upload, transcribe
