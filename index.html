@@ -1,0 +1,2227 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Modern Bilingual AI Restaurant &amp; Dating Assistant powered by Google Gemini AI">
+      
+      
+        <meta name="author" content="Defalt-here">
+      
+      
+        <link rel="canonical" href="https://defalt-here.github.io/Bean-Jam-Bot/">
+      
+      
+      
+        <link rel="next" href="getting-started/overview/">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Bean Jam Bot Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bean-jam-bot" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Bean Jam Bot Documentation" class="md-header__button md-logo" aria-label="Bean Jam Bot Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bean Jam Bot Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Defalt-here/Bean-Jam-Bot" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Defalt-here/Bean-Jam-Bot
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="getting-started/overview/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="architecture/system-design/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="features/weather-detection/" class="md-tabs__link">
+          
+  
+  
+  Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="deployment/quick-deploy/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Bean Jam Bot Documentation" class="md-nav__button md-logo" aria-label="Bean Jam Bot Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Bean Jam Bot Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Defalt-here/Bean-Jam-Bot" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Defalt-here/Bean-Jam-Bot
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai-powered-conversations" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 AI-Powered Conversations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restaurant-dating-planning-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      🗺️ Restaurant &amp; Dating Planning Intelligence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-voice-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎤 Advanced Voice Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bilingual-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      � Bilingual Support
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-blob-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌊 Dynamic Blob Animation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weather-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌤️ Weather Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-uiux" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Modern UI/UX
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-production-full-serverless" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏗️ Architecture (Production - Full Serverless)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Technology Stack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ Installation &amp; Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Installation &amp; Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-clone-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Clone Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Install Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configure-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configure Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-run-development-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Run Development Servers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎮 Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎮 Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Chat
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voice-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voice Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-switching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Language Switching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weather-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weather Queries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌍 Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌍 Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-production-full-serverless" class="md-nav__link">
+    <span class="md-ellipsis">
+      AWS (Production - Full Serverless)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS (Production - Full Serverless)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-package-lambda-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ Package Lambda Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-lambda-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ Create Lambda Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-create-api-gateway-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ Create API Gateway (HTTP API)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-update-frontend-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ Update Frontend Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-optional-health-check-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      6️⃣ Optional: Health Check &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blob-animation-technical-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Blob Animation Technical Details
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      📄 License
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgments" class="md-nav__link">
+    <span class="md-ellipsis">
+      🙏 Acknowledgments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧰 Troubleshooting (AWS)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture/system-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture/frontend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Frontend
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture/backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Backend
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture/diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Diagrams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Features
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="features/weather-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Weather Detection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="features/browser-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Browser Compatibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deployment/quick-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Deploy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deployment/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Production
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deployment/aws-lambda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AWS Lambda
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai-powered-conversations" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 AI-Powered Conversations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restaurant-dating-planning-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      🗺️ Restaurant &amp; Dating Planning Intelligence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-voice-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎤 Advanced Voice Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bilingual-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      � Bilingual Support
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-blob-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌊 Dynamic Blob Animation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weather-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌤️ Weather Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-uiux" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Modern UI/UX
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-production-full-serverless" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏗️ Architecture (Production - Full Serverless)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Technology Stack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ Installation &amp; Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Installation &amp; Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-clone-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Clone Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Install Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-configure-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Configure Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-run-development-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Run Development Servers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎮 Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎮 Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Chat
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voice-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voice Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-switching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Language Switching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weather-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Weather Queries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌍 Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌍 Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-production-full-serverless" class="md-nav__link">
+    <span class="md-ellipsis">
+      AWS (Production - Full Serverless)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS (Production - Full Serverless)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-package-lambda-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1️⃣ Package Lambda Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-lambda-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2️⃣ Create Lambda Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-create-api-gateway-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      3️⃣ Create API Gateway (HTTP API)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-update-frontend-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4️⃣ Update Frontend Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-optional-health-check-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      6️⃣ Optional: Health Check &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blob-animation-technical-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Blob Animation Technical Details
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      📄 License
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgments" class="md-nav__link">
+    <span class="md-ellipsis">
+      🙏 Acknowledgments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧰 Troubleshooting (AWS)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="bean-jam-bot">🫘 Bean Jam Bot<a class="headerlink" href="#bean-jam-bot" title="Permanent link">¶</a></h1>
+<hr>
+<h2 id="features">✨ Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<h3 id="ai-powered-conversations">🤖 AI-Powered Conversations<a class="headerlink" href="#ai-powered-conversations" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Google Gemini Pro</strong> integration for intelligent, context-aware restaurant and dating spot recommendations</li>
+<li>Natural language understanding for planning dates, restaurant hopping sessions, or getting quick recommendations</li>
+<li>Conversation history tracking for coherent, multi-turn dialogues</li>
+<li>Smart itinerary planning assistance</li>
+</ul>
+<h3 id="restaurant-dating-planning-intelligence">🗺️ Restaurant &amp; Dating Planning Intelligence<a class="headerlink" href="#restaurant-dating-planning-intelligence" title="Permanent link">¶</a></h3>
+<ul>
+<li>Curates date ideas based on vibe (cozy, adventurous, budget, premium) and time of day</li>
+<li>Builds restaurant-hopping routes with proximity awareness and cuisine diversity</li>
+<li>Adjusts plans using live weather context (e.g., indoor/outdoor, sunset views)</li>
+<li>Bilingual recommendations (EN/JP) with culturally relevant suggestions</li>
+</ul>
+<h3 id="advanced-voice-input">🎤 Advanced Voice Input<a class="headerlink" href="#advanced-voice-input" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Google Cloud Speech-to-Text</strong> integration with 48kHz WEBM_OPUS encoding</li>
+<li>Real-time voice transcription in <strong>English</strong> and <strong>Japanese</strong></li>
+<li>Visual feedback during recording with reactive blob animation</li>
+<li>Automatic audio level detection and visualization with 8-band equalizer</li>
+<li>Helpful toast notifications guiding users through the recording process</li>
+</ul>
+<h3 id="bilingual-support">� Bilingual Support<a class="headerlink" href="#bilingual-support" title="Permanent link">¶</a></h3>
+<ul>
+<li>Seamless language switching between <strong>English (EN)</strong> and <strong>Japanese (JP)</strong></li>
+<li>Language-specific AI prompts and responses</li>
+<li>Fully localized UI strings and error messages</li>
+<li>Cultural context awareness in recommendations</li>
+</ul>
+<h3 id="dynamic-blob-animation">🌊 Dynamic Blob Animation<a class="headerlink" href="#dynamic-blob-animation" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Organic, living blob</strong> that reacts to user interactions</li>
+<li>Voice-reactive animation with real-time audio level visualization</li>
+<li>Smooth state transitions between idle and active modes</li>
+<li>Different visual modes:</li>
+<li><strong>Normal Mode</strong>: Teal/blue gradient for standard conversations</li>
+<li><strong>Create Mode</strong>: Purple/pink gradient when AI is generating responses</li>
+<li>Gradual rotation and morphing effects</li>
+<li>Adjustable blur and saturation based on activity</li>
+<li>Hardware-accelerated animations for smooth 60fps performance</li>
+</ul>
+<h3 id="weather-integration">🌤️ Weather Integration<a class="headerlink" href="#weather-integration" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Context-aware weather detection</strong> - Gemini AI decides when to show weather cards</li>
+<li>Real-time weather data from <strong>WeatherAPI.com</strong></li>
+<li>Multi-day forecast support (current + up to 7 days)</li>
+<li>Location-based recommendations using browser geolocation</li>
+<li>IP-based fallback using OpenStreetMap for reverse geocoding</li>
+<li>Beautiful weather card UI with temperature, conditions, and forecasts</li>
+</ul>
+<h3 id="modern-uiux">🎨 Modern UI/UX<a class="headerlink" href="#modern-uiux" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Brutalist design</strong> aesthetic with bold borders and sharp edges</li>
+<li>Glassmorphism chat panel with adjustable transparency</li>
+<li>Smooth animations and transitions (1s opacity fades, 0.8s transforms)</li>
+<li>Custom scrollbar styling for chat history</li>
+<li>Responsive layout optimized for all screen sizes</li>
+<li>Brutalist shadow effects for depth</li>
+<li>Audio level equalizer overlay during voice input</li>
+</ul>
+<h3 id="architecture-production-full-serverless">🏗️ Architecture (Production - Full Serverless)<a class="headerlink" href="#architecture-production-full-serverless" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    Browser["&lt;b&gt;Browser Client&lt;/b&gt;&lt;br/&gt;React + Vite UI • Voice (MediaRecorder) • Blob Animation • EN/JP"]
+
+    Browser --&gt;|Audio| Gateway
+    Browser --&gt;|Chat| Gateway
+    Browser --&gt;|Weather| Gateway
+
+    Gateway["&lt;b&gt;AWS API Gateway (HTTP API)&lt;/b&gt;&lt;br/&gt;CORS @ Edge • Payload Format v2.0&lt;br/&gt;&lt;br/&gt;/transcribe    /gemini    /weather"]
+
+    Gateway --&gt; L1
+    Gateway --&gt; L2
+    Gateway --&gt; L3
+
+    L1["&lt;b&gt;Lambda: Transcribe&lt;/b&gt;&lt;br/&gt;Node 20"]
+    L2["&lt;b&gt;Lambda: Gemini&lt;/b&gt;&lt;br/&gt;Node 20"]
+    L3["&lt;b&gt;Lambda: Weather&lt;/b&gt;&lt;br/&gt;Node 20"]
+
+    L1 --&gt; API1
+    L2 --&gt; API2
+    L3 --&gt; API3
+
+    API1["&lt;b&gt;Google Cloud&lt;/b&gt;&lt;br/&gt;Speech-to-Text (v2)"]
+    API2["&lt;b&gt;Google Gemini&lt;/b&gt;&lt;br/&gt;Generative Language API"]
+    API3["&lt;b&gt;WeatherAPI&lt;/b&gt;&lt;br/&gt;Forecast API"]
+
+    style Browser fill:#5B9BD5,stroke:#2E5C8A,stroke-width:4px,color:#fff,font-weight:bold
+    style Gateway fill:#70AD47,stroke:#507E32,stroke-width:4px,color:#fff,font-weight:bold
+    style L1 fill:#FFC000,stroke:#C09000,stroke-width:3px,color:#000,font-weight:bold
+    style L2 fill:#FFC000,stroke:#C09000,stroke-width:3px,color:#000,font-weight:bold
+    style L3 fill:#FFC000,stroke:#C09000,stroke-width:3px,color:#000,font-weight:bold
+    style API1 fill:#9966FF,stroke:#7744CC,stroke-width:3px,color:#fff,font-weight:bold
+    style API2 fill:#9966FF,stroke:#7744CC,stroke-width:3px,color:#fff,font-weight:bold
+    style API3 fill:#9966FF,stroke:#7744CC,stroke-width:3px,color:#fff,font-weight:bold</code></pre>
+<p><strong>Architecture Benefits:</strong>
+- ✅ <strong>API keys secured server-side</strong> (never exposed to client)
+- ✅ <strong>Single CORS point</strong> at API Gateway (no duplicate headers)
+- ✅ <strong>Auto-scaling</strong> with Lambda cold-start &lt; 500ms
+- ✅ <strong>Cost-efficient</strong> (pay-per-request, ~$0.20/million requests)
+- ✅ <strong>Unified monitoring</strong> via CloudWatch Logs &amp; Metrics</p>
+<p><strong>High-Level Overview:</strong></p>
+<pre class="mermaid"><code>flowchart TB
+    Client[Browser Client&lt;br/&gt;React + Vite UI&lt;br/&gt;Voice • Blob • EN/JP]
+
+    Client --&gt;|Audio| Gateway
+    Client --&gt;|Chat| Gateway
+    Client --&gt;|Weather| Gateway
+
+    Gateway[AWS API Gateway&lt;br/&gt;HTTP API&lt;br/&gt;CORS @ Edge]
+
+    Gateway --&gt;|/transcribe| L1[Lambda&lt;br/&gt;Transcribe&lt;br/&gt;Node 20]
+    Gateway --&gt;|/gemini| L2[Lambda&lt;br/&gt;Gemini&lt;br/&gt;Node 20]
+    Gateway --&gt;|/weather| L3[Lambda&lt;br/&gt;Weather&lt;br/&gt;Node 20]
+
+    L1 --&gt; STT[Google Cloud&lt;br/&gt;Speech-to-Text]
+    L2 --&gt; GEM[Google Gemini&lt;br/&gt;API]
+    L3 --&gt; WEA[WeatherAPI&lt;br/&gt;Forecast]
+
+    style Client fill:#3b82f6,stroke:#1e40af,color:#fff
+    style Gateway fill:#10b981,stroke:#059669,color:#fff
+    style L1 fill:#f59e0b,stroke:#d97706,color:#fff
+    style L2 fill:#f59e0b,stroke:#d97706,color:#fff
+    style L3 fill:#f59e0b,stroke:#d97706,color:#fff
+    style STT fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style GEM fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style WEA fill:#8b5cf6,stroke:#7c3aed,color:#fff</code></pre>
+<p><strong>Detailed Architecture:</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Client[Browser Client - React + Vite]
+      UI[Chat UI&lt;br/&gt;EN/JP Toggle]
+      MIC[Voice Recorder&lt;br/&gt;MediaRecorder]
+      BLOB[Blob Animation&lt;br/&gt;Audio Reactive]
+    end
+
+    subgraph AWS[AWS Cloud - eu-north-1]
+      APIGW[API Gateway HTTP API&lt;br/&gt;CORS @ Edge Layer]
+
+      subgraph Lambdas[Lambda Functions - Node.js 20]
+        L1[BeanJamTranscribe&lt;br/&gt;512MB • 30s timeout]
+        L2[BeanJamGemini&lt;br/&gt;256MB • 15s timeout]
+        L3[BeanJamWeather&lt;br/&gt;256MB • 15s timeout]
+      end
+    end
+
+    subgraph External[External APIs]
+      STT[Google Cloud&lt;br/&gt;Speech-to-Text v2]
+      GEMINI[Google Gemini&lt;br/&gt;2.5 Flash API]
+      WEATHER[WeatherAPI.com&lt;br/&gt;Forecast JSON]
+    end
+
+    MIC --&gt;|webm/opus audio| UI
+    UI --&gt;|POST /transcribe| APIGW
+    UI --&gt;|POST /gemini| APIGW
+    UI --&gt;|POST /weather| APIGW
+
+    APIGW --&gt;|v2.0 payload| L1
+    APIGW --&gt;|v2.0 payload| L2
+    APIGW --&gt;|v2.0 payload| L3
+
+    L1 --&gt;|recognize| STT
+    L2 --&gt;|generateContent| GEMINI
+    L3 --&gt;|forecast.json| WEATHER
+
+    STT -.transcript.-&gt; L1
+    GEMINI -.response.-&gt; L2
+    WEATHER -.forecast.-&gt; L3
+
+    L1 -.JSON.-&gt; APIGW
+    L2 -.JSON.-&gt; APIGW
+    L3 -.JSON.-&gt; APIGW
+
+    APIGW -.response.-&gt; UI
+    UI --&gt; BLOB</code></pre>
+<h2 id="technology-stack">🚀 Technology Stack<a class="headerlink" href="#technology-stack" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Technology</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>React 18, TypeScript, Vite</td>
+</tr>
+<tr>
+<td><strong>UI Framework</strong></td>
+<td>Tailwind CSS, Shadcn/ui, Radix UI</td>
+</tr>
+<tr>
+<td><strong>State Management</strong></td>
+<td>React Context API, TanStack Query</td>
+</tr>
+<tr>
+<td><strong>Routing</strong></td>
+<td>React Router</td>
+</tr>
+<tr>
+<td><strong>AI Services</strong></td>
+<td>Google Gemini 2.5 Flash, Google Cloud Speech-to-Text</td>
+</tr>
+<tr>
+<td><strong>APIs</strong></td>
+<td>WeatherAPI.com, OpenStreetMap Nominatim</td>
+</tr>
+<tr>
+<td><strong>Backend (Dev)</strong></td>
+<td>Node.js, Express</td>
+</tr>
+<tr>
+<td><strong>Backend (Prod)</strong></td>
+<td>AWS API Gateway (HTTP) + AWS Lambda (Node.js 20)</td>
+</tr>
+<tr>
+<td><strong>Animation</strong></td>
+<td>CSS Keyframes, RequestAnimationFrame, Web Audio API</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>AWS Lambda/API Gateway, Docker (optional)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="project-structure">📁 Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bean-jam-bot/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── aws-lambda/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── transcribe/              # AWS Lambda: Audio → Text
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   │   ├── index.js             # Google Cloud STT handler
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   │   ├── package.json
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   │   └── function.zip         # Deployment artifact
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── gemini/                  # AWS Lambda: AI Chat Proxy
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   │   ├── index.js             # Gemini API proxy handler
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   │   └── function.zip
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   └── weather/                 # AWS Lambda: Weather Proxy
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│       ├── index.js             # WeatherAPI.com proxy handler
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│       └── function.zip
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>├── server/                      # Local development server (optional)
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   └── index.js
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── src/
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   ├── components/
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   │   ├── ui/                 # Shadcn/ui components
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   │   ├── BlobAnimation.tsx   # 🌊 Voice-reactive blob
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   │   ├── ChatMessage.tsx     # Chat bubble component
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   │   ├── WeatherCard.tsx     # Weather display card
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   │   └── LanguageToggle.tsx  # EN/JP switcher
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   ├── contexts/
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   │   └── useLanguage.tsx     # Language context
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│   ├── hooks/
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│   │   ├── use-audio-recorder.ts  # 🎤 Voice recording
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│   │   ├── use-audio-level.ts     # Audio visualization
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│   │   └── use-toast.ts
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│   ├── lib/
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│   │   ├── gemini.ts           # Gemini API client
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│   │   ├── location.ts         # Geolocation service
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│   │   ├── weather.ts          # Weather API client
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│   │   └── utils.ts
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│   ├── pages/
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│   │   └── Index.tsx           # Main chat interface
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>│   ├── App.tsx
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>│   └── main.tsx
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>├── .env                         # Environment variables
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>└── Dockerfile                   # Docker containerization (optional)
+</code></pre></div>
+<h2 id="installation-setup">🛠️ Installation &amp; Setup<a class="headerlink" href="#installation-setup" title="Permanent link">¶</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
+<ul>
+<li>Node.js v18+</li>
+<li>Google Cloud Platform account (for Speech-to-Text)</li>
+<li>Google Gemini API key</li>
+<li>WeatherAPI.com API key</li>
+</ul>
+<h3 id="1-clone-repository">1. Clone Repository<a class="headerlink" href="#1-clone-repository" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Defalt-here/Bean-Jam-Bot.git
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>Bean-Jam-Bot
+</code></pre></div>
+<h3 id="2-install-dependencies">2. Install Dependencies<a class="headerlink" href="#2-install-dependencies" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>npm<span class="w"> </span>install
+</code></pre></div>
+<h3 id="3-configure-environment-variables">3. Configure Environment Variables<a class="headerlink" href="#3-configure-environment-variables" title="Permanent link">¶</a></h3>
+<p>Create a <code>.env</code> file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Google Cloud Speech-to-Text (absolute path to service account JSON)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>GOOGLE_APPLICATION_CREDENTIALS=C:\path\to\your\service-account.json
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a># Google Gemini API Key
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>VITE_GEMINI_API_KEY=AIzaSy...
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a># WeatherAPI.com API Key
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>VITE_WEATHER_API_KEY=your_weatherapi_key
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a># AWS Lambda Endpoints (API Gateway HTTP API)
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>VITE_TRANSCRIBE_API_URL=https://&lt;api-id&gt;.execute-api.eu-north-1.amazonaws.com/transcribe
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>VITE_GEMINI_PROXY_URL=https://&lt;api-id&gt;.execute-api.eu-north-1.amazonaws.com/gemini
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>VITE_WEATHER_PROXY_URL=https://&lt;api-id&gt;.execute-api.eu-north-1.amazonaws.com/weather
+</code></pre></div>
+<h3 id="4-run-development-servers">4. Run Development Servers<a class="headerlink" href="#4-run-development-servers" title="Permanent link">¶</a></h3>
+<p><strong>Terminal 1 - Backend Server:</strong>
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>npm<span class="w"> </span>run<span class="w"> </span>start:server
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># or use the PowerShell script:</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>.<span class="se">\s</span>tart-server.ps1
+</code></pre></div><p></p>
+<p><strong>Terminal 2 - Frontend:</strong>
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>npm<span class="w"> </span>run<span class="w"> </span>dev
+</code></pre></div><p></p>
+<p>Open <code>http://localhost:8080</code> in your browser! 🎉</p>
+<h2 id="usage">🎮 Usage<a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
+<h3 id="text-chat">Text Chat<a class="headerlink" href="#text-chat" title="Permanent link">¶</a></h3>
+<ol>
+<li>Type your message in the input field</li>
+<li>Press Enter or click <strong>SEND</strong></li>
+<li>AI responds with restaurant/dating recommendations</li>
+</ol>
+<h3 id="voice-input">Voice Input<a class="headerlink" href="#voice-input" title="Permanent link">¶</a></h3>
+<ol>
+<li>Click the <strong>Mic</strong> button</li>
+<li>Grant microphone permissions</li>
+<li>Speak your question (in English or Japanese)</li>
+<li>Click <strong>Stop</strong> to transcribe</li>
+<li>Message automatically sends to AI</li>
+</ol>
+<h3 id="language-switching">Language Switching<a class="headerlink" href="#language-switching" title="Permanent link">¶</a></h3>
+<ul>
+<li>Click the <strong>EN</strong> / <strong>🇯🇵</strong> toggle at the top</li>
+<li>Switches both UI and AI response language</li>
+<li>All prompts and responses adapt automatically</li>
+</ul>
+<h3 id="weather-queries">Weather Queries<a class="headerlink" href="#weather-queries" title="Permanent link">¶</a></h3>
+<ul>
+<li>Ask about weather: "What's the weather like?"</li>
+<li>AI automatically shows weather card with forecast</li>
+<li>Location-based using your IP or GPS</li>
+</ul>
+<h2 id="deployment">🌍 Deployment<a class="headerlink" href="#deployment" title="Permanent link">¶</a></h2>
+<h3 id="aws-production-full-serverless">AWS (Production - Full Serverless)<a class="headerlink" href="#aws-production-full-serverless" title="Permanent link">¶</a></h3>
+<h4 id="1-package-lambda-functions">1️⃣ Package Lambda Functions<a class="headerlink" href="#1-package-lambda-functions" title="Permanent link">¶</a></h4>
+<p><strong>Transcribe Lambda</strong> (has dependencies):
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd </span><span class="n">aws-lambda</span><span class="p">/</span><span class="n">transcribe</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">npm</span> <span class="n">install</span> <span class="p">-</span><span class="n">-omit</span><span class="p">=</span><span class="n">dev</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">Compress-Archive</span> <span class="n">-Path</span> <span class="p">@(</span><span class="s2">"index.js"</span><span class="p">,</span><span class="s2">"package.json"</span><span class="p">,</span><span class="s2">"node_modules"</span><span class="p">)</span> <span class="n">-DestinationPath</span> <span class="k">function</span><span class="p">.</span><span class="n">zip</span> <span class="n">-Force</span>
+</code></pre></div><p></p>
+<p><strong>Gemini &amp; Weather Lambdas</strong> (no dependencies, already packaged):
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c"># function.zip already exists in:</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c"># aws-lambda/gemini/function.zip</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c"># aws-lambda/weather/function.zip</span>
+</code></pre></div><p></p>
+<h4 id="2-create-lambda-functions">2️⃣ Create Lambda Functions<a class="headerlink" href="#2-create-lambda-functions" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Runtime</th>
+<th>Memory</th>
+<th>Timeout</th>
+<th>Env Vars</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BeanJamTranscribe</strong></td>
+<td>Node.js 20.x</td>
+<td>512 MB</td>
+<td>30s</td>
+<td><code>GOOGLE_SERVICE_ACCOUNT_KEY</code> = your GCP service account JSON</td>
+</tr>
+<tr>
+<td><strong>BeanJamGemini</strong></td>
+<td>Node.js 20.x</td>
+<td>256 MB</td>
+<td>15s</td>
+<td><code>GEMINI_API_KEY</code> = your Gemini API key</td>
+</tr>
+<tr>
+<td><strong>BeanJamWeather</strong></td>
+<td>Node.js 20.x</td>
+<td>256 MB</td>
+<td>15s</td>
+<td><code>WEATHER_API_KEY</code> = your WeatherAPI key</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Steps for each:</strong>
+1. Create Function → Author from scratch
+2. Runtime: Node.js 20.x
+3. Execution role: Use existing → <code>BeanJamTranscribeLambdaRole</code> (or create new with basic Lambda permissions)
+4. Upload <code>function.zip</code> from Code tab
+5. Configuration → Environment variables → Add key/value from table above
+6. Configuration → General → Set Memory &amp; Timeout</p>
+<h4 id="3-create-api-gateway-http-api">3️⃣ Create API Gateway (HTTP API)<a class="headerlink" href="#3-create-api-gateway-http-api" title="Permanent link">¶</a></h4>
+<ol>
+<li><strong>Create API</strong></li>
+<li>Type: HTTP API</li>
+<li>Name: <code>BeanJamAPI</code></li>
+<li>Stage: <code>$default</code> (Auto-deploy: ON)</li>
+<li>
+<p>Region: <code>eu-north-1</code> (or your preferred region)</p>
+</li>
+<li>
+<p><strong>Configure Routes</strong></p>
+</li>
+<li>Click <strong>Routes</strong> → <strong>Create</strong> for each:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Integration</th>
+<th>Payload Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/transcribe</code></td>
+<td>Lambda: BeanJamTranscribe</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/gemini</code></td>
+<td>Lambda: BeanJamGemini</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/weather</code></td>
+<td>Lambda: BeanJamWeather</td>
+<td>2.0</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>Configure CORS</strong> (API-level)</li>
+<li>Click <strong>CORS</strong> in left menu</li>
+<li>Allow origins: <code>http://localhost:8080</code><ul>
+<li>Add production domains later (comma-separated)</li>
+</ul>
+</li>
+<li>Allow methods: <code>POST,OPTIONS</code></li>
+<li>Allow headers: <code>content-type</code></li>
+<li>Max age: <code>3600</code></li>
+<li>
+<p>✅ <strong>Critical</strong>: Do NOT set CORS headers in Lambda code (already handled correctly)</p>
+</li>
+<li>
+<p><strong>Deploy</strong></p>
+</li>
+<li>Toggle Auto-deploy OFF → ON to force refresh</li>
+<li>
+<p>Note your <strong>Invoke URL</strong>: <code>https://&lt;api-id&gt;.execute-api.eu-north-1.amazonaws.com</code></p>
+</li>
+<li>
+<p><strong>Permissions</strong></p>
+</li>
+<li>API Gateway will auto-add <code>lambda:InvokeFunction</code> permissions to each Lambda</li>
+<li>Verify in Lambda → Configuration → Permissions → Resource-based policy statements</li>
+</ol>
+<h4 id="4-update-frontend-configuration">4️⃣ Update Frontend Configuration<a class="headerlink" href="#4-update-frontend-configuration" title="Permanent link">¶</a></h4>
+<p>Edit <code>.env</code> with your API Gateway invoke URL:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>VITE_TRANSCRIBE_API_URL=https://k3i65afofi.execute-api.eu-north-1.amazonaws.com/transcribe
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>VITE_GEMINI_PROXY_URL=https://k3i65afofi.execute-api.eu-north-1.amazonaws.com/gemini
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>VITE_WEATHER_PROXY_URL=https://k3i65afofi.execute-api.eu-north-1.amazonaws.com/weather
+</code></pre></div>
+<p>Restart Vite dev server:
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">npm</span> <span class="n">run</span> <span class="n">dev</span>
+</code></pre></div><p></p>
+<p>Hard-refresh browser: <code>Ctrl+Shift+R</code> (Windows) or <code>Cmd+Shift+R</code> (Mac)</p>
+<h4 id="6-optional-health-check-monitoring">6️⃣ Optional: Health Check &amp; Monitoring<a class="headerlink" href="#6-optional-health-check-monitoring" title="Permanent link">¶</a></h4>
+<p><strong>Health Check Route:</strong>
+- API Gateway → Routes → Create → <code>GET /health</code>
+- Integration: Mock response
+- Response: <code>200</code> with body <code>{ "ok": true }</code>
+- Use for uptime monitoring (Pingdom, UptimeRobot, etc.)</p>
+<p><strong>CloudWatch Monitoring:</strong>
+- Lambda → Monitor → View CloudWatch logs
+- API Gateway → Monitor → CloudWatch metrics
+- Set alarms for 5XX errors, cold start duration, invocation counts</p>
+<h2 id="blob-animation-technical-details">🎨 Blob Animation Technical Details<a class="headerlink" href="#blob-animation-technical-details" title="Permanent link">¶</a></h2>
+<p>The blob animation is a sophisticated visual element that enhances user engagement:</p>
+<ul>
+<li><strong>Interpolated Loading States</strong>: Smooth transitions using lerp (linear interpolation) with 0.05 speed</li>
+<li><strong>Audio Reactivity</strong>: Real-time FFT analysis creates 8-band equalizer visualization</li>
+<li><strong>Dynamic Properties</strong>:</li>
+<li>Blur: 8-26px based on state</li>
+<li>Saturation: 120-200% during activity</li>
+<li>Rotation: 60s slow (idle) to 8s fast (loading)</li>
+<li>Scale: Pulsing 1.0-1.08x</li>
+<li>Movement: Sine/cosine wave patterns</li>
+<li><strong>Color Modes</strong>:</li>
+<li>Normal: <code>#3B82F6</code> → <code>#10B981</code> → <code>#22D3EE</code> (blue-teal)</li>
+<li>Create: <code>#6366F1</code> → <code>#A855F7</code> → <code>#EC4899</code> (purple-pink)</li>
+<li><strong>Performance</strong>: Hardware-accelerated with <code>will-change</code> transforms</li>
+</ul>
+<h2 id="license">📄 License<a class="headerlink" href="#license" title="Permanent link">¶</a></h2>
+<p>This project is open source and available under the MIT License.</p>
+<h2 id="acknowledgments">🙏 Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permanent link">¶</a></h2>
+<ul>
+<li>Google Gemini AI for conversational intelligence</li>
+<li>Google Cloud Speech-to-Text for voice recognition</li>
+<li>WeatherAPI.com for weather data</li>
+<li>Shadcn/ui for beautiful components</li>
+<li>The React and Vite communities</li>
+</ul>
+<hr>
+<div align="center">
+
+**Made with 💜 by [Defalt-here](https://github.com/Defalt-here)**
+
+*Bean Jam Bot - Where AI meets beautiful design* ✨
+
+</div>
+
+<h2 id="troubleshooting-aws">🧰 Troubleshooting (AWS)<a class="headerlink" href="#troubleshooting-aws" title="Permanent link">¶</a></h2>
+<ul>
+<li>405 Method Not Allowed</li>
+<li>Ensure route <code>POST /transcribe</code> is attached to your Lambda integration</li>
+<li>Toggle <code>$default</code> stage Auto-deploy OFF → ON to redeploy</li>
+<li>
+<p>Verify you’re calling <code>/transcribe</code> path (not base URL)</p>
+</li>
+<li>
+<p>CORS blocked (No/duplicate Access-Control-Allow-Origin)</p>
+</li>
+<li>Let API Gateway own CORS; remove <code>Access-Control-*</code> headers from Lambda</li>
+<li>
+<p>CORS in API: origins = your exact origin(s), methods = POST, headers = content-type</p>
+</li>
+<li>
+<p>Function URL vs API Gateway</p>
+</li>
+<li>Prefer API Gateway for production (auth, observability, routes)</li>
+<li>If using Function URL temporarily, set CORS there and avoid duplicate headers in Lambda</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2025 Bean Jam Bot
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Defalt-here/Bean-Jam-Bot" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://defalt-here.github.io/Bean-Jam-Bot/" target="_blank" rel="noopener" title="defalt-here.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

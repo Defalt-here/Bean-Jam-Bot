@@ -1,0 +1,1901 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Modern Bilingual AI Restaurant &amp; Dating Assistant powered by Google Gemini AI">
+      
+      
+        <meta name="author" content="Defalt-here">
+      
+      
+        <link rel="canonical" href="https://defalt-here.github.io/Bean-Jam-Bot/architecture/frontend/">
+      
+      
+        <link rel="prev" href="../system-design/">
+      
+      
+        <link rel="next" href="../backend/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Frontend - Bean Jam Bot Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bean-jam-bot-technical-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Bean Jam Bot Documentation" class="md-header__button md-logo" aria-label="Bean Jam Bot Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bean Jam Bot Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Frontend
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Defalt-here/Bean-Jam-Bot" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Defalt-here/Bean-Jam-Bot
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/overview/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../system-design/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../features/weather-detection/" class="md-tabs__link">
+          
+  
+  
+  Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/quick-deploy/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Bean Jam Bot Documentation" class="md-nav__button md-logo" aria-label="Bean Jam Bot Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Bean Jam Bot Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Defalt-here/Bean-Jam-Bot" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Defalt-here/Bean-Jam-Bot
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Frontend
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Frontend
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Project Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Project Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Purpose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-architecture-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Architecture Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3. Technology Stack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-code-structure-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Code Structure Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-core-modules-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Core Modules &amp; Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Core Modules &amp; Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Pages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Pages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srcpagesindextsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/pages/Index.tsx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srcpagesnotfoundtsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/pages/NotFound.tsx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-custom-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Custom Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2. Custom Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srccomponentsblobanimationtsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/components/BlobAnimation.tsx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srccomponentschatmessagetsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/components/ChatMessage.tsx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srccomponentsweathercardtsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/components/WeatherCard.tsx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Hooks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srchooksuse-audio-recorderts" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/hooks/use-audio-recorder.ts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srchooksuse-audio-levelts" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/hooks/use-audio-level.ts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-libraries-utilities-srclib" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. Libraries &amp; Utilities (src/lib)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. State Management
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-routing-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Routing &amp; Navigation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-styling-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Styling System
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-apis-and-data-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. APIs and Data Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Testing Strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-developer-onboarding-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Developer Onboarding Guide
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Developer Onboarding Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-welcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1. Welcome
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2. Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-local-development-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3. Local Development Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-key-files-and-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4. Key Files and Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-contribution-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.5. Contribution Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Backend
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Diagrams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Features
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/weather-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Weather Detection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/browser-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Browser Compatibility
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/quick-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Deploy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Production
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/aws-lambda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AWS Lambda
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Project Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Project Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Purpose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-architecture-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Architecture Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3. Technology Stack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-code-structure-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Code Structure Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-core-modules-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Core Modules &amp; Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Core Modules &amp; Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Pages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Pages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srcpagesindextsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/pages/Index.tsx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srcpagesnotfoundtsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/pages/NotFound.tsx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-custom-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Custom Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2. Custom Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srccomponentsblobanimationtsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/components/BlobAnimation.tsx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srccomponentschatmessagetsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/components/ChatMessage.tsx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srccomponentsweathercardtsx" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/components/WeatherCard.tsx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Hooks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srchooksuse-audio-recorderts" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/hooks/use-audio-recorder.ts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srchooksuse-audio-levelts" class="md-nav__link">
+    <span class="md-ellipsis">
+      src/hooks/use-audio-level.ts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-libraries-utilities-srclib" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. Libraries &amp; Utilities (src/lib)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. State Management
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-routing-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Routing &amp; Navigation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-styling-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Styling System
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-apis-and-data-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. APIs and Data Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Testing Strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-developer-onboarding-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Developer Onboarding Guide
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Developer Onboarding Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-welcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1. Welcome
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2. Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-local-development-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3. Local Development Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-key-files-and-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4. Key Files and Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-contribution-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.5. Contribution Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="bean-jam-bot-technical-documentation">Bean Jam Bot - Technical Documentation<a class="headerlink" href="#bean-jam-bot-technical-documentation" title="Permanent link">¶</a></h1>
+<h2 id="1-project-overview">1. Project Overview<a class="headerlink" href="#1-project-overview" title="Permanent link">¶</a></h2>
+<h3 id="11-purpose">1.1. Purpose<a class="headerlink" href="#11-purpose" title="Permanent link">¶</a></h3>
+<p>Bean Jam Bot is an enterprise-grade, bilingual (English/Japanese) AI chat assistant designed for date and restaurant planning. It features a modern, "brutalist" user interface with sophisticated voice input capabilities. The application leverages a suite of Google Cloud AI services to provide natural, context-aware interactions, including location-based weather information to enhance its recommendations.</p>
+<h3 id="12-architecture-summary">1.2. Architecture Summary<a class="headerlink" href="#12-architecture-summary" title="Permanent link">¶</a></h3>
+<p>The system is architected as a modern JAMstack application. The frontend is a single-page application (SPA) built with <strong>React</strong> and <strong>Vite</strong>. All backend logic, including API key management and communication with third-party services, is handled by serverless functions. This decoupling ensures security, scalability, and platform flexibility.</p>
+<p>The architecture supports multiple deployment targets, including Vercel, Netlify, and AWS Lambda, with configurations provided for each. This allows the application to be deployed across various cloud infrastructures seamlessly.</p>
+<h3 id="13-technology-stack">1.3. Technology Stack<a class="headerlink" href="#13-technology-stack" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Technology</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core Framework</strong></td>
+<td>React 18, TypeScript</td>
+</tr>
+<tr>
+<td><strong>Build Tool</strong></td>
+<td>Vite</td>
+</tr>
+<tr>
+<td><strong>State Management</strong></td>
+<td>React Context API (for language), TanStack Query (for server state caching), Component State (<code>useState</code>)</td>
+</tr>
+<tr>
+<td><strong>Routing</strong></td>
+<td>React Router v6</td>
+</tr>
+<tr>
+<td><strong>Styling</strong></td>
+<td>Tailwind CSS, <code>tailwindcss-animate</code></td>
+</tr>
+<tr>
+<td><strong>UI Components</strong></td>
+<td><code>shadcn/ui</code> (built on Radix UI)</td>
+</tr>
+<tr>
+<td><strong>API Services</strong></td>
+<td>• <strong>AI Chat</strong>: Google Gemini (<code>gemini-2.5-flash</code>) <br> • <strong>Speech-to-Text</strong>: Google Cloud Speech-to-Text <br> • <strong>Weather</strong>: WeatherAPI.com <br> • <strong>Geolocation</strong>: Browser Geolocation API, ipapi.co (fallback)</td>
+</tr>
+<tr>
+<td><strong>Backend</strong></td>
+<td>Serverless Functions (Node.js) on Vercel, Netlify, or AWS Lambda; Express.js for local development.</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Vercel, Netlify, AWS, Docker</td>
+</tr>
+<tr>
+<td><strong>Linting</strong></td>
+<td>ESLint with TypeScript ESLint</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-code-structure-overview">2. Code Structure Overview<a class="headerlink" href="#2-code-structure-overview" title="Permanent link">¶</a></h2>
+<p>The repository is organized to separate concerns between the frontend application, serverless functions for different platforms, and configuration files.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── api/                    # Vercel Serverless Functions
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   └── transcribe.js
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── aws-lambda/             # AWS Lambda Functions (Gemini, Transcribe, Weather)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── gemini/
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── transcribe/
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   └── weather/
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├── netlify/                # Netlify Serverless Functions
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   └── functions/
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│       └── transcribe.js
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>├── public/                 # Static assets (icons, robots.txt)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>├── server/                 # Local Express.js server for development proxy
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   └── index.js
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├── src/                    # Main frontend application source
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   ├── components/         # Reusable React components
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   │   ├── ui/             # shadcn/ui components
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   │   ├── BlobAnimation.tsx # Core visual feedback component
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   │   ├── ChatMessage.tsx   # Renders a single chat message
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   │   └── ...
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   ├── contexts/           # React Context providers (e.g., LanguageContext)
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   ├── hooks/              # Custom React hooks
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   ├── lib/                # Core business logic, API clients, and utilities
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   ├── pages/              # Top-level route components
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│   └── ...
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>├── .gitignore
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>├── Dockerfile              # Docker configuration for containerization
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>├── netlify.toml            # Netlify deployment configuration
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>├── package.json            # Project dependencies and scripts
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>├── tailwind.config.ts      # Tailwind CSS configuration
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>├── tsconfig.json           # TypeScript configuration
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>├── vercel.json             # Vercel deployment configuration
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>└── vite.config.ts          # Vite build configuration
+</code></pre></div>
+<h2 id="3-core-modules-components">3. Core Modules &amp; Components<a class="headerlink" href="#3-core-modules-components" title="Permanent link">¶</a></h2>
+<h3 id="31-pages">3.1. Pages<a class="headerlink" href="#31-pages" title="Permanent link">¶</a></h3>
+<h4 id="srcpagesindextsx"><code>src/pages/Index.tsx</code><a class="headerlink" href="#srcpagesindextsx" title="Permanent link">¶</a></h4>
+<p>This is the main component, orchestrating the entire chat experience.</p>
+<ul>
+<li><strong>State Management</strong>: Manages chat messages, user input, loading states (<code>isLoading</code>, <code>isCreating</code>), and user location via <code>useState</code> and <code>useRef</code>.</li>
+<li><strong>Core Logic</strong>:<ul>
+<li>Handles form submission for text-based messages.</li>
+<li>Integrates <code>useAudioRecorder</code> and <code>useAudioLevel</code> hooks to manage voice input, recording state, and visual feedback.</li>
+<li>Coordinates API calls to the Gemini service for generating responses.</li>
+<li>Manages the display of the <code>WeatherCard</code> based on Gemini's response.</li>
+</ul>
+</li>
+<li><strong>Dependencies</strong>: <code>BlobAnimation</code>, <code>ChatMessage</code>, <code>LanguageToggle</code>, <code>WeatherCard</code>, <code>useAudioRecorder</code>, <code>useAudioLevel</code>, <code>getGeminiService</code>, <code>getUserLocation</code>, <code>getWeather</code>.</li>
+</ul>
+<h4 id="srcpagesnotfoundtsx"><code>src/pages/NotFound.tsx</code><a class="headerlink" href="#srcpagesnotfoundtsx" title="Permanent link">¶</a></h4>
+<p>A standard 404 page displayed for any route not explicitly defined.</p>
+<h3 id="32-custom-components">3.2. Custom Components<a class="headerlink" href="#32-custom-components" title="Permanent link">¶</a></h3>
+<h4 id="srccomponentsblobanimationtsx"><code>src/components/BlobAnimation.tsx</code><a class="headerlink" href="#srccomponentsblobanimationtsx" title="Permanent link">¶</a></h4>
+<p>A critical UI component providing visual feedback to the user.</p>
+<ul>
+<li><strong>Props</strong>:<ul>
+<li><code>isLoading: boolean</code>: Indicates a pending operation (recording or waiting for AI).</li>
+<li><code>isBehind: boolean</code>: Renders the animation behind the chat UI if <code>true</code>.</li>
+<li><code>mode: 'normal' | 'create'</code>: Alters the color and intensity of the animation.</li>
+<li><code>levels: Float32Array | null</code>: Real-time audio frequency data to drive animation responsiveness.</li>
+</ul>
+</li>
+<li><strong>Functionality</strong>: Uses <code>requestAnimationFrame</code> to create a dynamic, "gooey" blob effect that reacts to audio input and loading states, enhancing user engagement.</li>
+</ul>
+<h4 id="srccomponentschatmessagetsx"><code>src/components/ChatMessage.tsx</code><a class="headerlink" href="#srccomponentschatmessagetsx" title="Permanent link">¶</a></h4>
+<p>Renders a single message bubble in the chat interface.</p>
+<ul>
+<li><strong>Props</strong>:<ul>
+<li><code>content: string</code>: The text content of the message.</li>
+<li><code>isUser: boolean</code>: Determines styling (e.g., alignment, color).</li>
+<li><code>language: 'en' | 'jp'</code>: Used for language-specific rendering if needed.</li>
+</ul>
+</li>
+<li><strong>Functionality</strong>: Includes a <code>formatMessageContent</code> utility to parse and render Gemini's markdown-like responses into structured HTML (lists, paragraphs).</li>
+</ul>
+<h4 id="srccomponentsweathercardtsx"><code>src/components/WeatherCard.tsx</code><a class="headerlink" href="#srccomponentsweathercardtsx" title="Permanent link">¶</a></h4>
+<p>A dedicated component to display weather information.</p>
+<ul>
+<li><strong>Props</strong>: A <code>WeatherCardProps</code> object containing <code>location</code>, <code>temperature</code>, <code>condition</code>, <code>humidity</code>, etc.</li>
+<li><strong>Functionality</strong>: Renders a "brutalist"-styled card with formatted weather data. It uses the <code>LanguageContext</code> to display labels in either English or Japanese.</li>
+</ul>
+<h3 id="33-hooks">3.3. Hooks<a class="headerlink" href="#33-hooks" title="Permanent link">¶</a></h3>
+<h4 id="srchooksuse-audio-recorderts"><code>src/hooks/use-audio-recorder.ts</code><a class="headerlink" href="#srchooksuse-audio-recorderts" title="Permanent link">¶</a></h4>
+<p>Encapsulates all logic for recording audio from the user's microphone.</p>
+<ul>
+<li><strong>Exports</strong>: <code>start</code>, <code>stop</code>, <code>sendToServer</code>, and <code>isRecording</code>.</li>
+<li><strong>Browser Compatibility</strong>: Intelligently detects the best supported audio MIME type (<code>audio/webm</code>, <code>audio/ogg</code>, or <code>audio/wav</code>) to ensure cross-browser functionality.</li>
+<li><strong>Functionality</strong>: Manages <code>MediaRecorder</code> state, captures audio into a <code>Blob</code>, and provides a function to send the base64-encoded audio to the transcription backend.</li>
+</ul>
+<h4 id="srchooksuse-audio-levelts"><code>src/hooks/use-audio-level.ts</code><a class="headerlink" href="#srchooksuse-audio-levelts" title="Permanent link">¶</a></h4>
+<p>Provides real-time audio frequency data from the microphone.</p>
+<ul>
+<li><strong>Functionality</strong>: Uses the Web Audio API (<code>AudioContext</code>, <code>AnalyserNode</code>) to capture microphone input levels. The output is consumed by <code>BlobAnimation</code> for visualization.</li>
+</ul>
+<h3 id="34-libraries-utilities-srclib">3.4. Libraries &amp; Utilities (<code>src/lib</code>)<a class="headerlink" href="#34-libraries-utilities-srclib" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong><code>gemini.ts</code></strong>: A service class that abstracts communication with the Google Gemini API. It constructs the request payload, including system instructions and conversation history, and can route requests through a serverless proxy to protect the API key.</li>
+<li><strong><code>weather.ts</code></strong>: A service for fetching data from WeatherAPI.com. It includes logic to format requests based on user location and parse the response into structured data, including the <code>WeatherCardData</code> format.</li>
+<li><strong><code>location.ts</code></strong>: Manages user location detection. It first attempts to use the high-accuracy browser Geolocation API (GPS) and gracefully falls back to a lower-accuracy IP-based location service (<code>ipapi.co</code>) if GPS is unavailable or denied.</li>
+<li><strong><code>browser-compat.ts</code></strong>: A crucial utility module that detects browser features (<code>MediaRecorder</code>, <code>getUserMedia</code>, etc.) and provides user-friendly error messages if a feature is unsupported. This enables graceful degradation for older browsers.</li>
+<li><strong><code>utils.ts</code></strong>: Contains the <code>cn</code> utility for merging Tailwind CSS classes and a <code>sanitizeMarkdown</code> function to strip markdown syntax from AI responses.</li>
+</ul>
+<h2 id="4-state-management">4. State Management<a class="headerlink" href="#4-state-management" title="Permanent link">¶</a></h2>
+<p>The application employs a hybrid state management strategy suitable for its complexity.</p>
+<ul>
+<li><strong>Global State</strong>: A single global state, <strong>Language</strong>, is managed via React's Context API (<code>src/contexts/LanguageContext.tsx</code>). This allows any component to access the current language (<code>en</code> or <code>jp</code>) and toggle it.</li>
+<li><strong>Server State &amp; Caching</strong>: <strong>TanStack Query</strong> (<code>@tanstack/react-query</code>) is integrated at the root of the application (<code>App.tsx</code>). While the primary chat flow uses direct <code>fetch</code> calls, TanStack Query is available for caching, refetching, and managing the state of asynchronous data from backend services.</li>
+<li><strong>Component State</strong>: The majority of the application's state (chat history, input values, loading status) is managed locally within the <code>Index.tsx</code> page using React hooks (<code>useState</code>, <code>useRef</code>). This colocation of state with its view logic simplifies the data flow for the application's primary feature.</li>
+</ul>
+<h2 id="5-routing-navigation">5. Routing &amp; Navigation<a class="headerlink" href="#5-routing-navigation" title="Permanent link">¶</a></h2>
+<p>Routing is handled by <strong>React Router v6</strong>. The configuration in <code>src/App.tsx</code> is straightforward:</p>
+<ul>
+<li><code>/</code>: Maps to the main <code>Index</code> page component.</li>
+<li><code>*</code>: A catch-all route that directs any unmatched URL to the <code>NotFound</code> page.</li>
+</ul>
+<p>The application does not currently implement protected routes or complex lazy-loading, as its primary functionality is contained within a single view.</p>
+<h2 id="6-styling-system">6. Styling System<a class="headerlink" href="#6-styling-system" title="Permanent link">¶</a></h2>
+<p>The UI is built on a robust and modern styling system.</p>
+<ul>
+<li><strong>Framework</strong>: <strong>Tailwind CSS</strong> is used for all styling, enabling a utility-first workflow. The configuration is located in <code>tailwind.config.ts</code>.</li>
+<li><strong>Component Library</strong>: The project uses <strong><code>shadcn/ui</code></strong>, a collection of accessible and composable components built on Radix UI and styled with Tailwind CSS. These components are not imported as a library but are co-located within the codebase at <code>src/components/ui/</code>, allowing for full customization.</li>
+<li><strong>Theming</strong>: A theming system based on CSS variables is defined in <code>src/index.css</code>, following <code>shadcn/ui</code> conventions. This allows for centralized control over the color palette, typography (<code>IBM Plex Mono</code>), and other design tokens. The aesthetic is intentionally "brutalist," characterized by sharp edges, high contrast, and a monospaced font.</li>
+<li><strong>Responsive Design</strong>: The utility-first nature of Tailwind CSS facilitates a fully responsive, mobile-first design.</li>
+</ul>
+<h2 id="7-apis-and-data-handling">7. APIs and Data Handling<a class="headerlink" href="#7-apis-and-data-handling" title="Permanent link">¶</a></h2>
+<p>The frontend interacts with backend services through a secure proxy layer implemented as serverless functions. This prevents exposure of sensitive API keys on the client-side.</p>
+<ul>
+<li><strong>Transcription API (<code>/api/transcribe</code>)</strong>:<ul>
+<li>The frontend captures audio, encodes it as a base64 string, and sends it along with its MIME type to this endpoint.</li>
+<li>The serverless function forwards the request to the Google Cloud Speech-to-Text API and returns the transcript.</li>
+</ul>
+</li>
+<li><strong>Gemini API (via <code>GeminiService</code>)</strong>:<ul>
+<li>The <code>GeminiService</code> constructs a detailed prompt including the user's message, conversation history, language preference, and contextual data (location, weather).</li>
+<li>It sends this payload to a serverless proxy (<code>VITE_GEMINI_PROXY_URL</code>) or directly to the Gemini API if no proxy is configured.</li>
+<li>The service parses the response, checking for a special <code>[SHOW_WEATHER_CARD]</code> marker that dictates whether the weather card should be displayed.</li>
+</ul>
+</li>
+<li><strong>Weather API (via <code>getWeather</code>)</strong>:<ul>
+<li>Fetches weather data from a proxy (<code>VITE_WEATHER_PROXY_URL</code>) which in turn calls WeatherAPI.com. This keeps the Weather API key secure.</li>
+</ul>
+</li>
+<li><strong>Error Handling</strong>: All asynchronous operations are wrapped in <code>try...catch</code> blocks. User-facing errors are displayed using the custom <code>useToast</code> hook, providing clear and non-disruptive feedback.</li>
+<li><strong>Loading States</strong>: The UI provides comprehensive feedback for all loading states. The <code>isLoading</code> and <code>isCreating</code> flags control the <code>BlobAnimation</code> and disable UI elements to prevent duplicate submissions.</li>
+</ul>
+<h2 id="8-testing-strategy">8. Testing Strategy<a class="headerlink" href="#8-testing-strategy" title="Permanent link">¶</a></h2>
+<p>The current version of the codebase does not have an integrated testing framework (<code>Jest</code>, <code>Vitest</code>, <code>Cypress</code>, etc.) configured in <code>package.json</code>.</p>
+<p><strong>Recommendation</strong>: For an enterprise-level system, implementing a comprehensive testing strategy is a critical next step. The recommended approach would be:
+*   <strong>Unit &amp; Integration Tests</strong>: Use <strong>Vitest</strong> with <strong>React Testing Library</strong> to test individual components, hooks, and utility functions in isolation.
+*   <strong>End-to-End (E2E) Tests</strong>: Use <strong>Cypress</strong> or <strong>Playwright</strong> to test critical user flows, such as submitting a text message, completing a voice recording session, and verifying the AI response.
+*   <strong>Code Coverage</strong>: Aim for a minimum of 80% test coverage across all critical modules.</p>
+<h2 id="10-developer-onboarding-guide">10. Developer Onboarding Guide<a class="headerlink" href="#10-developer-onboarding-guide" title="Permanent link">¶</a></h2>
+<h3 id="101-welcome">10.1. Welcome<a class="headerlink" href="#101-welcome" title="Permanent link">¶</a></h3>
+<p>Welcome to the Bean Jam Bot project! This guide will help you get your development environment set up and running quickly.</p>
+<h3 id="102-prerequisites">10.2. Prerequisites<a class="headerlink" href="#102-prerequisites" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Node.js</strong>: Version 18.x or later.</li>
+<li><strong>API Keys</strong>: You will need to obtain the following API keys:<ul>
+<li>Google Cloud Service Account JSON (for Speech-to-Text).</li>
+<li>Google Gemini API Key.</li>
+<li>WeatherAPI.com API Key.</li>
+</ul>
+</li>
+<li><strong>Vercel CLI (Optional)</strong>: <code>npm install -g vercel</code> for easy deployment.</li>
+</ol>
+<h3 id="103-local-development-setup">10.3. Local Development Setup<a class="headerlink" href="#103-local-development-setup" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p><strong>Clone the Repository</strong>:
+    </p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>bean-jam-bot
+</code></pre></div><p></p>
+</li>
+<li>
+<p><strong>Install Dependencies</strong>:
+    </p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>npm<span class="w"> </span>install
+</code></pre></div><p></p>
+</li>
+<li>
+<p><strong>Configure Environment Variables</strong>:
+    Create a new file named <code>.env</code> in the root of the project and add your API keys. Use the <code>.gitignore</code> file as a reference for the variable names. It should look like this:
+    </p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Path to your Google Cloud service account JSON file
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>GOOGLE_APPLICATION_CREDENTIALS=./src/Keys/your-service-account-file.json
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a># API key for Google Gemini
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>VITE_GEMINI_API_KEY=AIzaSy...
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a># API key for WeatherAPI.com
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>VITE_WEATHER_API_KEY=your_weather_api_key
+</code></pre></div>
+    <em>Note: Place your Google Cloud JSON key file in the <code>src/Keys/</code> directory.</em><p></p>
+</li>
+<li>
+<p><strong>Run the Application</strong>:
+    You need to run two processes in separate terminals:</p>
+<ul>
+<li><strong>Terminal 1 (Backend Server)</strong>: Starts the local Express.js proxy for transcription.
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>npm<span class="w"> </span>run<span class="w"> </span>start:server
+</code></pre></div></li>
+<li><strong>Terminal 2 (Frontend Server)</strong>: Starts the Vite development server.
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>npm<span class="w"> </span>run<span class="w"> </span>dev
+</code></pre></div></li>
+</ul>
+</li>
+<li>
+<p><strong>Access the Application</strong>: Open your browser and navigate to <code>http://localhost:8080</code>.</p>
+</li>
+</ol>
+<h3 id="104-key-files-and-modules">10.4. Key Files and Modules<a class="headerlink" href="#104-key-files-and-modules" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Main UI Logic</strong>: <code>src/pages/Index.tsx</code> - This is the heart of the application.</li>
+<li><strong>Voice Recording</strong>: <code>src/hooks/use-audio-recorder.ts</code> - All microphone and recording logic lives here.</li>
+<li><strong>AI Integration</strong>: <code>src/lib/gemini.ts</code> - This service class handles all interactions with the Gemini AI.</li>
+<li><strong>Backend Proxy (Local)</strong>: <code>server/index.js</code> - The Express server that runs locally to proxy transcription requests.</li>
+<li><strong>Backend Proxy (Production)</strong>: <code>api/transcribe.js</code> (Vercel), <code>netlify/functions/transcribe.js</code> (Netlify), <code>aws-lambda/transcribe/index.js</code> (AWS).</li>
+</ul>
+<h3 id="105-contribution-workflow">10.5. Contribution Workflow<a class="headerlink" href="#105-contribution-workflow" title="Permanent link">¶</a></h3>
+<ol>
+<li>Create a new feature branch from <code>main</code>.</li>
+<li>Implement your changes.</li>
+<li><strong>(Action Required)</strong>: Add relevant unit or integration tests for your changes using Vitest and React Testing Library.</li>
+<li>Ensure the linter passes: <code>npm run lint</code>.</li>
+<li>Submit a Pull Request for review.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2025 Bean Jam Bot
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Defalt-here/Bean-Jam-Bot" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://defalt-here.github.io/Bean-Jam-Bot/" target="_blank" rel="noopener" title="defalt-here.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
