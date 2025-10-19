@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Service Test - Bean Jam Bot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+        button {
+            background: #fff;
+            color: #667eea;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .log {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #4ade80;
+        }
+        .log-entry.error {
+            border-left-color: #f87171;
+        }
+        .log-entry.warn {
+            border-left-color: #fbbf24;
+        }
+        .status {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Location Service Test</h1>
+        
+        <div class="info">
+            <strong>About:</strong> This page tests the location detection system used by Bean Jam Bot.
+            It tries GPS first (requires permission), then falls back to IP-based location.
+        </div>
+
+        <button id="testBtn" onclick="testLocation()">🚀 Test Location Detection</button>
+        <button onclick="testGPSOnly()">📍 Test GPS Only</button>
+        <button onclick="testIPOnly()">🌐 Test IP Only</button>
+        <button onclick="clearLogs()">🗑️ Clear Logs</button>
+
+        <div class="status" id="status">Ready to test</div>
+
+        <div id="result"></div>
+
+        <h3>Console Logs:</h3>
+        <div class="log" id="logs"></div>
+    </div>
+
+    <script>
+        const logsDiv = document.getElementById('logs');
+        const resultDiv = document.getElementById('result');
+        const statusDiv = document.getElementById('status');
+        
+        // Intercept console.log, console.warn, console.error
+        const originalLog = console.log;
+        const originalWarn = console.warn;
+        const originalError = console.error;
+        
+        function addLog(message, type = 'log') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logsDiv.appendChild(entry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+        
+        console.log = (...args) => {
+            originalLog(...args);
+            addLog(args.join(' '), 'log');
+        };
+        
+        console.warn = (...args) => {
+            originalWarn(...args);
+            addLog(args.join(' '), 'warn');
+        };
+        
+        console.error = (...args) => {
+            originalError(...args);
+            addLog(args.join(' '), 'error');
+        };
+
+        function clearLogs() {
+            logsDiv.innerHTML = '';
+            resultDiv.innerHTML = '';
+            statusDiv.textContent = 'Logs cleared';
+        }
+
+        function showResult(data) {
+            resultDiv.innerHTML = `<div class="result"><strong>Result:</strong>\n${JSON.stringify(data, null, 2)}</div>`;
+        }
+
+        async function testGPSOnly() {
+            statusDiv.textContent = '🔄 Testing GPS...';
+            try {
+                console.log('🌍 Testing GPS location only...');
+                
+                if (!navigator.geolocation) {
+                    throw new Error('Geolocation not available');
+                }
+                
+                if (!window.isSecureContext) {
+                    console.warn('Not in secure context (need HTTPS or localhost)');
+                }
+                
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        timeout: 10000,
+                        maximumAge: 0,
+                        enableHighAccuracy: true
+                    });
+                });
+                
+                console.log('GPS coords:', position.coords);
+                
+                // Try OpenStreetMap (primary)
+                let result = null;
+                try {
+                    const osmUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&zoom=10&addressdetails=1`;
+                    console.log('Fetching from OpenStreetMap:', osmUrl);
+                    const osmResponse = await fetch(osmUrl, {
+                        headers: { 'User-Agent': 'BeanJamBot-ChatApp' }
+                    });
+                    const osmData = await osmResponse.json();
+                    
+                    console.log('OpenStreetMap result:', osmData);
+                    
+                    if (osmData.address) {
+                        const address = osmData.address;
+                        result = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            accuracy: position.coords.accuracy,
+                            city: address.city || address.town || address.village || address.municipality,
+                            region: address.state || address.province || address.region,
+                            country: address.country,
+                            source: 'gps (OpenStreetMap)'
+                        };
+                    }
+                } catch (error) {
+                    console.warn('OpenStreetMap failed, trying BigDataCloud...');
+                }
+                
+                // Fallback to BigDataCloud if OSM failed
+                if (!result || !result.city) {
+                    const bdcUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`;
+                    console.log('Fetching from BigDataCloud:', bdcUrl);
+                    const bdcResponse = await fetch(bdcUrl);
+                    const bdcData = await bdcResponse.json();
+                    
+                    console.log('BigDataCloud result:', bdcData);
+                    
+                    result = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        accuracy: position.coords.accuracy,
+                        city: bdcData.city || bdcData.locality,
+                        region: bdcData.principalSubdivision,
+                        country: bdcData.countryName,
+                        source: 'gps (BigDataCloud)'
+                    };
+                }
+                
+                showResult(result);
+                statusDiv.textContent = result.city ? `✅ GPS Success: ${result.city}` : '⚠️ GPS coords only, no city';
+            } catch (error) {
+                console.error('GPS test failed:', error.message);
+                statusDiv.textContent = '❌ GPS Failed';
+                showResult({ error: error.message });
+            }
+        }
+
+        async function testIPOnly() {
+            statusDiv.textContent = '🔄 Testing IP location...';
+            try {
+                console.log('🌐 Testing IP location only...');
+                
+                // Try ipapi.co
+                console.log('Trying ipapi.co...');
+                const response1 = await fetch('https://ipapi.co/json/');
+                const data1 = await response1.json();
+                console.log('ipapi.co result:', data1);
+                
+                if (data1.city) {
+                    showResult({
+                        city: data1.city,
+                        region: data1.region,
+                        country: data1.country_name,
+                        latitude: data1.latitude,
+                        longitude: data1.longitude,
+                        source: 'ip (ipapi.co)'
+                    });
+                    statusDiv.textContent = `✅ IP Success: ${data1.city}`;
+                    return;
+                }
+                
+                // Try ip-api.com
+                console.log('Trying ip-api.com...');
+                const response2 = await fetch('http://ip-api.com/json/');
+                const data2 = await response2.json();
+                console.log('ip-api.com result:', data2);
+                
+                if (data2.status === 'success') {
+                    showResult({
+                        city: data2.city,
+                        region: data2.regionName,
+                        country: data2.country,
+                        latitude: data2.lat,
+                        longitude: data2.lon,
+                        source: 'ip (ip-api.com)'
+                    });
+                    statusDiv.textContent = `✅ IP Success: ${data2.city}`;
+                } else {
+                    throw new Error('IP location failed');
+                }
+            } catch (error) {
+                console.error('IP test failed:', error.message);
+                statusDiv.textContent = '❌ IP Failed';
+                showResult({ error: error.message });
+            }
+        }
+
+        async function testLocation() {
+            statusDiv.textContent = '🔄 Testing full location detection...';
+            clearLogs();
+            
+            console.log('🚀 Starting full location test (GPS → IP fallback)...');
+            console.log('Browser:', navigator.userAgent);
+            console.log('Secure context:', window.isSecureContext);
+            console.log('Geolocation available:', !!navigator.geolocation);
+            
+            // Try GPS first
+            let result = null;
+            try {
+                console.log('--- Attempting GPS ---');
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        timeout: 10000,
+                        maximumAge: 300000,
+                    });
+                });
+                
+                console.log('✅ GPS granted:', position.coords);
+                
+                // Try reverse geocoding (OpenStreetMap first, then BigDataCloud)
+                try {
+                    // Try OpenStreetMap
+                    const osmUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&zoom=10&addressdetails=1`;
+                    const osmResponse = await fetch(osmUrl, {
+                        headers: { 'User-Agent': 'BeanJamBot-ChatApp' }
+                    });
+                    const osmData = await osmResponse.json();
+                    
+                    if (osmData.address) {
+                        const address = osmData.address;
+                        const city = address.city || address.town || address.village || address.municipality;
+                        
+                        if (city) {
+                            result = {
+                                city,
+                                region: address.state || address.province || address.region,
+                                country: address.country,
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                                source: 'gps (OpenStreetMap)'
+                            };
+                            console.log('✅ City found via OpenStreetMap');
+                        }
+                    }
+                    
+                    // Fallback to BigDataCloud if no city
+                    if (!result || !result.city) {
+                        console.log('Trying BigDataCloud as fallback...');
+                        const bdcUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`;
+                        const bdcResponse = await fetch(bdcUrl);
+                        const bdcData = await bdcResponse.json();
+                        
+                        result = {
+                            city: bdcData.city || bdcData.locality,
+                            region: bdcData.principalSubdivision,
+                            country: bdcData.countryName,
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            source: 'gps (BigDataCloud)'
+                        };
+                        
+                        if (result.city) {
+                            console.log('✅ City found via BigDataCloud');
+                        } else {
+                            console.warn('⚠️ GPS worked but no city name found');
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Reverse geocoding failed, using coords only');
+                    result = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        source: 'gps'
+                    };
+                }
+            } catch (error) {
+                console.warn('GPS failed:', error.message);
+                console.log('--- Falling back to IP location ---');
+                
+                // Try IP fallback
+                try {
+                    const ipResponse = await fetch('https://ipapi.co/json/');
+                    const ipData = await ipResponse.json();
+                    
+                    result = {
+                        city: ipData.city,
+                        region: ipData.region,
+                        country: ipData.country_name,
+                        latitude: ipData.latitude,
+                        longitude: ipData.longitude,
+                        source: 'ip'
+                    };
+                    
+                    console.log('✅ IP location acquired');
+                } catch (ipError) {
+                    console.error('IP location also failed:', ipError.message);
+                    result = { error: 'All location methods failed', source: 'unknown' };
+                }
+            }
+            
+            showResult(result);
+            
+            if (result.city) {
+                statusDiv.textContent = `✅ Success: ${result.city}, ${result.country}`;
+            } else if (result.latitude) {
+                statusDiv.textContent = `⚠️ Coords only: ${result.latitude.toFixed(2)}, ${result.longitude.toFixed(2)}`;
+            } else {
+                statusDiv.textContent = '❌ Location detection failed';
+            }
+        }
+        
+        // Auto-run on page load
+        console.log('Location test page loaded. Click "Test Location Detection" to start.');
+        addLog('Page ready. Click a button to test location services.', 'log');
+    </script>
+</body>
+</html>
