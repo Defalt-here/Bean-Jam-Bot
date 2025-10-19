@@ -1138,9 +1138,6 @@
 
 
 <h1 id="system-architecture-design-bean-jam-bot">System Architecture &amp; Design: Bean Jam Bot<a class="headerlink" href="#system-architecture-design-bean-jam-bot" title="Permanent link">¶</a></h1>
-<p><strong>Version:</strong> 1.0
-<strong>Date:</strong> October 18, 2023
-<strong>Author:</strong> System Architect AI</p>
 <h2 id="1-system-overview">1. System Overview<a class="headerlink" href="#1-system-overview" title="Permanent link">¶</a></h2>
 <p>Bean Jam Bot is a modern, full-stack AI chat assistant designed for date and restaurant planning. It provides a conversational interface with bilingual (English/Japanese) support, leveraging voice-to-text transcription for user input. The architecture is built on a serverless-first, multi-cloud model, prioritizing scalability, maintainability, and security by isolating third-party API interactions into a dedicated backend layer.</p>
 <p>The system's core purpose is to offer users intelligent recommendations by integrating a powerful language model (Google Gemini) with real-time, location-aware data services like weather and geolocation. The frontend is a responsive React/Vite single-page application (SPA), while the backend consists of a suite of independent, single-purpose serverless functions acting as secure proxies to external APIs.</p>
