@@ -1,9 +1,5 @@
 # System Architecture & Design: Bean Jam Bot
 
-**Version:** 1.0
-**Date:** October 18, 2023
-**Author:** System Architect AI
-
 ## 1. System Overview
 
 Bean Jam Bot is a modern, full-stack AI chat assistant designed for date and restaurant planning. It provides a conversational interface with bilingual (English/Japanese) support, leveraging voice-to-text transcription for user input. The architecture is built on a serverless-first, multi-cloud model, prioritizing scalability, maintainability, and security by isolating third-party API interactions into a dedicated backend layer.

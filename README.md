@@ -1,19 +1,5 @@
 # 🫘 Bean Jam Bot
 
-<div align="center">
-
-**A Modern Bilingual AI Restaurant & Dating Assistant**
-
-*Powered by Google Gemini AI with Voice Recognition & Dynamic UI*
-
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://cloud.google.com/)
-[![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
-
-</div>
-
 ---
 
 ## ✨ Features
@@ -73,34 +59,40 @@
 
 ### 🏗️ Architecture (Production - Full Serverless)
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│                              Browser Client                              │
-│  React + Vite UI  •  Voice (MediaRecorder)  •  Blob Animation  •  EN/JP  │
-└────────────┬─────────────┬──────────────┬────────────────────────────────┘
-             │             │              │
-             │ Audio       │ Chat         │ Weather
-             ▼             ▼              ▼
-        ┌────────────────────────────────────────┐
-        │     AWS API Gateway (HTTP API)         │
-        │  CORS @ Edge • Payload Format v2.0     │
-        │ ┌────────────┬────────────┬──────────┐ │
-        │ │/transcribe │  /gemini   │ /weather │ │
-        │ └─────┬──────┴──────┬─────┴────┬─────┘ │
-        └───────┼─────────────┼──────────┼───────┘
-                ▼             ▼          ▼
-         ┌──────────┐  ┌──────────┐  ┌──────────┐
-         │ Lambda:  │  │ Lambda:  │  │ Lambda:  │
-         │Transcribe│  │  Gemini  │  │ Weather  │
-         │ Node 20  │  │ Node 20  │  │ Node 20  │
-         └────┬─────┘  └────┬─────┘  └────┬─────┘
-              │             │              │
-              ▼             ▼              ▼
-      ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-      │ Google Cloud │ │ Google Gemini│ │ WeatherAPI   │
-      │ Speech-to-   │ │ Generative   │ │ Forecast API │
-      │ Text (v2)    │ │ Language API │ │              │
-      └──────────────┘ └──────────────┘ └──────────────┘
+```mermaid
+flowchart TD
+    Browser["<b>Browser Client</b><br/>React + Vite UI • Voice (MediaRecorder) • Blob Animation • EN/JP"]
+    
+    Browser -->|Audio| Gateway
+    Browser -->|Chat| Gateway
+    Browser -->|Weather| Gateway
+    
+    Gateway["<b>AWS API Gateway (HTTP API)</b><br/>CORS @ Edge • Payload Format v2.0<br/><br/>/transcribe    /gemini    /weather"]
+    
+    Gateway --> L1
+    Gateway --> L2
+    Gateway --> L3
+    
+    L1["<b>Lambda: Transcribe</b><br/>Node 20"]
+    L2["<b>Lambda: Gemini</b><br/>Node 20"]
+    L3["<b>Lambda: Weather</b><br/>Node 20"]
+    
+    L1 --> API1
+    L2 --> API2
+    L3 --> API3
+    
+    API1["<b>Google Cloud</b><br/>Speech-to-Text (v2)"]
+    API2["<b>Google Gemini</b><br/>Generative Language API"]
+    API3["<b>WeatherAPI</b><br/>Forecast API"]
+    
+    style Browser fill:#5B9BD5,stroke:#2E5C8A,stroke-width:4px,color:#fff,font-weight:bold
+    style Gateway fill:#70AD47,stroke:#507E32,stroke-width:4px,color:#fff,font-weight:bold
+    style L1 fill:#FFC000,stroke:#C09000,stroke-width:3px,color:#000,font-weight:bold
+    style L2 fill:#FFC000,stroke:#C09000,stroke-width:3px,color:#000,font-weight:bold
+    style L3 fill:#FFC000,stroke:#C09000,stroke-width:3px,color:#000,font-weight:bold
+    style API1 fill:#9966FF,stroke:#7744CC,stroke-width:3px,color:#fff,font-weight:bold
+    style API2 fill:#9966FF,stroke:#7744CC,stroke-width:3px,color:#fff,font-weight:bold
+    style API3 fill:#9966FF,stroke:#7744CC,stroke-width:3px,color:#fff,font-weight:bold
 ```
 
 **Architecture Benefits:**
@@ -418,30 +410,6 @@ npm run dev
 
 Hard-refresh browser: `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
 
-#### 5️⃣ Test End-to-End
-
-**PowerShell tests:**
-```powershell
-# Test Transcribe
-$audio = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("test.webm"))
-$body = @{ audio = $audio; language = "en-US" } | ConvertTo-Json
-Invoke-RestMethod -Uri "https://k3i65afofi.execute-api.eu-north-1.amazonaws.com/transcribe" -Method POST -Body $body -ContentType "application/json"
-
-# Test Gemini
-$body = @{ message = "Suggest a romantic dinner in Tokyo"; language = "en" } | ConvertTo-Json
-Invoke-RestMethod -Uri "https://k3i65afofi.execute-api.eu-north-1.amazonaws.com/gemini" -Method POST -Body $body -ContentType "application/json"
-
-# Test Weather
-$body = @{ q = "Tokyo"; days = 1 } | ConvertTo-Json
-Invoke-RestMethod -Uri "https://k3i65afofi.execute-api.eu-north-1.amazonaws.com/weather" -Method POST -Body $body -ContentType "application/json"
-```
-
-**Browser test:**
-- Open `http://localhost:8080`
-- Record voice → AI responds
-- Ask about weather → Weather card appears
-- Check Network tab: all requests go to API Gateway, API keys never exposed
-
 #### 6️⃣ Optional: Health Check & Monitoring
 
 **Health Check Route:**
@@ -455,12 +423,6 @@ Invoke-RestMethod -Uri "https://k3i65afofi.execute-api.eu-north-1.amazonaws.com/
 - API Gateway → Monitor → CloudWatch metrics
 - Set alarms for 5XX errors, cold start duration, invocation counts
 
-### Docker (optional)
-
-```bash
-docker build -t bean-jam-bot .
-docker run -p 3000:3000 bean-jam-bot
-```
 
 ## 🎨 Blob Animation Technical Details
 
@@ -479,9 +441,6 @@ The blob animation is a sophisticated visual element that enhances user engageme
   - Create: `#6366F1` → `#A855F7` → `#EC4899` (purple-pink)
 - **Performance**: Hardware-accelerated with `will-change` transforms
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
