@@ -64,13 +64,10 @@ export function formatWeatherPayload(location: LocationData, days: number = 1): 
   
   if (location.latitude && location.longitude) {
     query = `${location.latitude},${location.longitude}`;
-    console.log('📍 Using GPS coordinates for weather:', query);
   } else if (location.city) {
     query = location.city;
-    console.log('📍 Using city name for weather:', query);
   } else {
     query = 'London'; // Ultimate fallback
-    console.warn('⚠️ No location data available, using default: London');
   }
 
   return {
@@ -128,7 +125,6 @@ export async function getWeather(location: LocationData, days: number = 1): Prom
     const data: WeatherData = await response.json();
     return data;
   } catch (error) {
-    console.error('Weather API Error:', error);
     if (error instanceof Error) {
       throw error;
     }

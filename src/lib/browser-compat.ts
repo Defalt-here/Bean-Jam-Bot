@@ -123,20 +123,5 @@ export function getCompatibilityMessage(): string | null {
  * Log browser capabilities for debugging
  */
 export function logBrowserInfo(): void {
-  const caps = checkBrowserCapabilities();
-  console.group('🌐 Browser Compatibility Check');
-  console.log(`Browser: ${caps.browserName} ${caps.browserVersion}`);
-  console.log(`MediaRecorder: ${caps.hasMediaRecorder ? '✅' : '❌'}`);
-  console.log(`getUserMedia: ${caps.hasGetUserMedia ? '✅' : '❌'}`);
-  console.log(`AudioContext: ${caps.hasAudioContext ? '✅' : '❌'}`);
-  console.log(`Geolocation: ${caps.hasGeolocation ? '✅' : '❌'}`);
-  console.log(`Supported Audio Formats:`, caps.supportedAudioFormats);
-  
-  const message = getCompatibilityMessage();
-  if (message) {
-    console.warn('⚠️ Compatibility Issue:', message);
-  } else {
-    console.log('✅ All features supported!');
-  }
-  console.groupEnd();
+  // Silent - compatibility check runs but no console output
 }

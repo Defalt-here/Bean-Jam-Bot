@@ -65,9 +65,8 @@ const Index = () => {
       try {
         const location = await getUserLocation();
         setUserLocation(location);
-        console.log('Location detected:', formatLocation(location));
       } catch (error) {
-        console.error('Location detection error:', error);
+        // Silent fail
       }
     };
 
@@ -121,7 +120,6 @@ const Index = () => {
           // Prepare weather card data in case Gemini decides to show it
           weatherCardData = extractWeatherCardData(weatherData, days);
         } catch (weatherError) {
-          console.error('Weather fetch error:', weatherError);
           // Continue without weather data - Gemini will respond without it
         }
       }
@@ -142,7 +140,6 @@ const Index = () => {
         weatherData: result.showWeatherCard ? weatherCardData : undefined
       }]);
     } catch (error) {
-      console.error('Error getting response:', error);
       const errorMessage = error instanceof Error ? error.message : 'Failed to get response';
       
       // Show error toast
@@ -280,7 +277,6 @@ const Index = () => {
                       if (!hasStartedChat) setHasStartedChat(true);
                       simulateResponse(result.transcript);
                     } catch (err) {
-                      console.error('Upload/transcribe error', err);
                       toast({ title: language === 'en' ? 'Transcription failed' : '文字起こし失敗', description: String(err), variant: 'destructive' });
                     }
                     // remove uploading toast if any
@@ -336,7 +332,6 @@ const Index = () => {
                     if (!hasStartedChat) setHasStartedChat(true);
                     simulateResponse(result.transcript);
                   } catch (err) {
-                    console.error('Upload/transcribe error', err);
                     toast({ title: language === 'en' ? 'Transcription failed' : '文字起こし失敗', description: String(err), variant: 'destructive' });
                   }
                   try { uploadingToast?.dismiss?.(); } catch (e) { /* noop */ }

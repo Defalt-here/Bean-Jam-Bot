@@ -202,7 +202,6 @@ export class GeminiService {
         showWeatherCard
       };
     } catch (error) {
-      console.error('Gemini API Error:', error);
       if (error instanceof Error) {
         throw error;
       }

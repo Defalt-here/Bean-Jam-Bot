@@ -1,0 +1,99 @@
+site_name: Bean Jam Bot Documentation
+site_description: A Modern Bilingual AI Restaurant & Dating Assistant powered by Google Gemini AI
+site_author: Defalt-here
+site_url: https://defalt-here.github.io/Bean-Jam-Bot/
+
+repo_name: Defalt-here/Bean-Jam-Bot
+repo_url: https://github.com/Defalt-here/Bean-Jam-Bot
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  
+  icon:
+    repo: fontawesome/brands/github
+  
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - glightbox
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Defalt-here/Bean-Jam-Bot
+    - icon: fontawesome/solid/globe
+      link: https://defalt-here.github.io/Bean-Jam-Bot/
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Overview: getting-started/overview.md
+      - Installation: getting-started/installation.md
+  - Architecture:
+      - System Design: architecture/system-design.md
+      - Frontend: architecture/frontend.md
+      - Backend: architecture/backend.md
+      - Diagrams: architecture/diagrams.md
+  - Features:
+      - Weather Detection: features/weather-detection.md
+      - Browser Compatibility: features/browser-compatibility.md
+  - Deployment:
+      - Quick Deploy: deployment/quick-deploy.md
+      - Production: deployment/production.md
+      - AWS Lambda: deployment/aws-lambda.md
+
+copyright: Copyright &copy; 2025 Bean Jam Bot

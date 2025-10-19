@@ -58,7 +58,6 @@ export const useAudioLevel = (active: boolean) => {
 
         rafRef.current = requestAnimationFrame(tick);
       } catch (err) {
-        console.warn('Microphone access error', err);
         setLevels(null);
       }
     };

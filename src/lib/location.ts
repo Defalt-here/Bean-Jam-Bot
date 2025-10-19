@@ -17,27 +17,22 @@ export interface LocationData {
 async function getGPSLocation(): Promise<LocationData | null> {
   return new Promise((resolve) => {
     if (!navigator.geolocation) {
-      console.warn('Geolocation API not available in this browser');
       resolve(null);
       return;
     }
 
     // Check if we're on a secure context (HTTPS or localhost)
     if (!window.isSecureContext) {
-      console.warn('Geolocation requires HTTPS or localhost. Current context is not secure.');
       resolve(null);
       return;
     }
 
-    console.log('Requesting GPS location permission...');
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        console.log('GPS location granted:', { latitude, longitude });
         
         try {
           // Use OpenStreetMap Nominatim for reverse geocoding
-          console.log('Attempting reverse geocoding with OpenStreetMap...');
           const osmResponse = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`,
             {
@@ -49,7 +44,6 @@ async function getGPSLocation(): Promise<LocationData | null> {
 
           if (osmResponse.ok) {
             const osmData = await osmResponse.json();
-            console.log('OpenStreetMap response:', osmData);
             const address = osmData.address || {};
             
             const city = address.city || address.town || address.village || address.hamlet || 
@@ -58,7 +52,6 @@ async function getGPSLocation(): Promise<LocationData | null> {
             const country = address.country;
             
             if (city) {
-              console.log('✅ City found via OpenStreetMap:', city);
               resolve({
                 city,
                 region,
@@ -72,7 +65,6 @@ async function getGPSLocation(): Promise<LocationData | null> {
           }
           
           // If no city found but we have coords, return with coords only
-          console.warn('⚠️ Could not determine city name from coordinates');
           resolve({
             latitude,
             longitude,
@@ -80,7 +72,6 @@ async function getGPSLocation(): Promise<LocationData | null> {
           });
           
         } catch (error) {
-          console.error('Reverse geocoding error:', error);
           resolve({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -88,15 +79,7 @@ async function getGPSLocation(): Promise<LocationData | null> {
           });
         }
       },
-      (error) => {
-        console.warn('GPS location denied or unavailable:', error.message, error.code);
-        if (error.code === 1) {
-          console.log('User denied location permission');
-        } else if (error.code === 2) {
-          console.log('Location unavailable (GPS disabled or no signal)');
-        } else if (error.code === 3) {
-          console.log('Location request timed out');
-        }
+      () => {
         resolve(null);
       },
       {
@@ -112,15 +95,12 @@ async function getGPSLocation(): Promise<LocationData | null> {
  */
 async function getIPLocation(): Promise<LocationData | null> {
   try {
-    console.log('Attempting IP location with ipapi.co...');
     const response = await fetch('https://ipapi.co/json/');
     
     if (response.ok) {
       const data = await response.json();
-      console.log('ipapi.co response:', data);
       
       if (data.city) {
-        console.log('✅ City found via ipapi.co:', data.city);
         return {
           city: data.city,
           region: data.region,
@@ -132,10 +112,9 @@ async function getIPLocation(): Promise<LocationData | null> {
       }
     }
   } catch (error) {
-    console.warn('ipapi.co failed:', error);
+    // Silent fail
   }
   
-  console.warn('⚠️ IP location service failed');
   return null;
 }
 
@@ -143,26 +122,19 @@ async function getIPLocation(): Promise<LocationData | null> {
  * Get user location - tries GPS first, falls back to IP
  */
 export async function getUserLocation(): Promise<LocationData> {
-  console.log('🌍 Starting location detection...');
-  
   // Try GPS first
-  console.log('Attempting GPS location...');
   const gpsLocation = await getGPSLocation();
   if (gpsLocation) {
-    console.log('✅ GPS location acquired:', gpsLocation);
     return gpsLocation;
   }
 
   // Fallback to IP
-  console.log('GPS unavailable, falling back to IP location...');
   const ipLocation = await getIPLocation();
   if (ipLocation) {
-    console.log('✅ IP location acquired:', ipLocation);
     return ipLocation;
   }
 
   // If all fails
-  console.warn('⚠️ Could not determine location');
   return {
     source: 'unknown',
   };
